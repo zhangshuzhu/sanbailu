@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/main_content_rl"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000"
+    android:orientation="vertical">
+    <!-- TabHost 显示的内容 -->
+    <FrameLayout
+        android:id="@+id/realtabcontent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/act_main_nav_rl" />
+
+    <com.stephen.furniturerepair.gui.widget.MyFragmentTabHost
+        android:id="@android:id/tabhost"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@android:id/tabcontent"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
+    </com.stephen.furniturerepair.gui.widget.MyFragmentTabHost>
+
+    <RelativeLayout
+        android:id="@+id/act_main_nav_rl"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="#00000000">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#E2E2E4" />
+
+        <RadioGroup
+            android:id="@+id/radioGroup1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="0.5dp"
+            android:background="#FEFEFE"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingTop="1dp">
+
+            <RadioButton
+                android:id="@+id/radio0"
+                style="@style/ButtomBarImgBtn1"
+                android:drawableTop="@drawable/checked_main_class"
+                android:text="首页" />
+
+            <RadioButton
+                android:id="@+id/radio1"
+                style="@style/ButtomBarImgBtn1"
+                android:drawableTop="@drawable/checked_main_cart"
+                android:text="联盟" />
+
+            <RadioButton
+                android:id="@+id/radio2"
+                style="@style/ButtomBarImgBtn1"
+                android:drawableTop="@drawable/checked_main_mine"
+                android:text="发单" />
+
+            <RadioButton
+                android:id="@+id/radio3"
+                style="@style/ButtomBarImgBtn1"
+                android:drawableTop="@drawable/checked_main_mine"
+                android:text="我" />
+        </RadioGroup>
+    </RelativeLayout>
+</RelativeLayout>

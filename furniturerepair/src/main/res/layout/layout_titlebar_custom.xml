@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/app_titlebar_height"
+    android:background="@color/app_theme_red">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/topbar_left"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/topbar_left_imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:background="@drawable/app_transparent_drawable"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/topbar_left_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/app_transparent_drawable"
+                android:padding="13dp"
+                android:clickable="false"
+                android:textColor="@color/app_theme_white"
+                android:textSize="14dp"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/topbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:maxLength="10"
+            android:clickable="false"
+            android:textColor="@color/app_theme_white"
+            android:textSize="@dimen/app_titlebar_textsize"
+            android:typeface="normal" />
+
+        <LinearLayout
+            android:id="@+id/topbar_right"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/topbar_right_imageButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:background="@drawable/app_transparent_drawable"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/topbar_right_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/app_transparent_drawable"
+                android:gravity="center_vertical"
+                android:padding="12dp"
+                android:clickable="false"
+                android:textColor="@color/app_theme_white"
+                android:textSize="14dp"
+                android:visibility="gone" />
+        </LinearLayout>
+    </RelativeLayout>
+</FrameLayout>

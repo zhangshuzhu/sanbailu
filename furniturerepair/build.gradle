@@ -1,0 +1,51 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        debug {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('C:\\Users\\Stephen\\.android\\debug.keystore')
+            storePassword 'android'
+        }
+        release {
+            keyAlias 'sanbailu'
+            keyPassword '1234567890'
+            storeFile file('D:\\AndroidStudio_workspace\\FurnitureRepairProject\\sanbailu\\sanbailu.jks')
+            storePassword '1234567890'
+        }
+    }
+    compileSdkVersion 22
+    buildToolsVersion "23.0.3"
+
+    defaultConfig {
+        applicationId "com.stephen.furniturerepair"
+        minSdkVersion 14
+        targetSdkVersion 22
+        versionCode 1
+        versionName "1.0"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile files('libs/butterknife-7.0.1.jar')
+    compile 'com.squareup.okhttp:okhttp:2.7.1'
+    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.google.code.gson:gson:2.5'
+    compile files('libs/locSDK_6.23.jar')
+    compile files('libs/BaiduLBS_Android.jar')
+}

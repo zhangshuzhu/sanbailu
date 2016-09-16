@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/furniturerepair/furniturerepair.iml" filepath="$PROJECT_DIR$/furniturerepair/furniturerepair.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library_pickerview/library_pickerview.iml" filepath="$PROJECT_DIR$/library_pickerview/library_pickerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sanbailu.iml" filepath="$PROJECT_DIR$/sanbailu.iml" />
+    </modules>
+  </component>
+</project>
