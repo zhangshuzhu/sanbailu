@@ -19,6 +19,7 @@ import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.common.base.BaseFragment;
 import com.stephen.furniturerepair.common.interfaces.Constant;
+import com.stephen.furniturerepair.common.utils.LogUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
 import com.stephen.furniturerepair.service.BaiduLBSInfo;
 
@@ -28,6 +29,7 @@ import com.stephen.furniturerepair.service.BaiduLBSInfo;
  * Emial: 895745843@qq.com
  */
 public class OneFragment extends BaseFragment {
+    private static final String TAG = "OneFragment";
 
     private TitleBar titleBarShopCart;
     private MapView mapMv;
@@ -49,12 +51,13 @@ public class OneFragment extends BaseFragment {
     private void initView() {
         titleBarShopCart.setTitlBartitle("首页");
 
-//        BaiduLBSInfo baiduLBSInfo = App.getBaiduLBSInfo();
-//        double latitude = baiduLBSInfo.getLatitude();
-//        double lontitude = baiduLBSInfo.getLontitude();
+        BaiduLBSInfo baiduLBSInfo = App.getBaiduLBSInfo();
+        double latitude = baiduLBSInfo.getLatitude();
+        double lontitude = baiduLBSInfo.getLontitude();
+        LogUtils.E(TAG, "--------->latitude:" + latitude);
+        LogUtils.E(TAG, "--------->lontitude:" + lontitude);
 
-
-        initBLSMap(Constant.latitude, Constant.longitude);
+        initBLSMap(latitude, lontitude);
     }
 
     @Override
@@ -66,9 +69,12 @@ public class OneFragment extends BaseFragment {
         try {
             mBaiduMap = mapMv.getMap();
             mBaiduMap.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+            mBaiduMap.setMapStatus(MapStatusUpdateFactory.zoomTo(15));
+
             LatLng point = new LatLng(mapLat, mapLng);
 
-            reLocation(null);
+            reLocation(point);
+
             //构建Marker图标
             BitmapDescriptor bitmap = BitmapDescriptorFactory.fromResource(R.mipmap.icon_marka);
             //构建MarkerOption，用于在地图上添加Marker
@@ -82,12 +88,7 @@ public class OneFragment extends BaseFragment {
     }
 
     public void refreshCity() {
-/*        BaiduLBSInfo baiduLBSInfo = App.getBaiduLBSInfo();
-        String city = "北京";
-        if (baiduLBSInfo != null) {
-            city = baiduLBSInfo.getDistrict();
-        }*/
-//        textViewTitleBarLeft.setText(city);
+
     }
 
     public void reLoadData() {
@@ -116,8 +117,7 @@ public class OneFragment extends BaseFragment {
     }
 
     //移动地图 点击定位按钮 地图移动回当前点
-    public void reLocation(View v){
-        LatLng ll = new LatLng(Constant.latitude, Constant.longitude);
+    public void reLocation(LatLng ll){
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
         mBaiduMap.animateMapStatus(u);
     }

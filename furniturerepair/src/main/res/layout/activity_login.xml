@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="10dp"
-            android:text="手机号" />
+            android:text="用户名/手机号" />
 
         <EditText
             android:id="@+id/editText"
@@ -36,7 +36,7 @@
             android:layout_weight="1"
             android:background="@color/transparent"
             android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_012234566789"
-            android:inputType="phone"
+            android:inputType="text"
             android:maxLength="11" />
 
     </LinearLayout>
@@ -112,5 +112,17 @@
         android:text="免费注册"
         android:textColor="#666666"
         android:textSize="15sp" />
+
+
+<!--    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:button="@null"
+        android:checked="true"
+        android:drawableLeft="@drawable/checked_main_mine"
+        android:drawablePadding="7dp"
+        android:text="3000"
+        android:textSize="18sp" />-->
 
 </LinearLayout>

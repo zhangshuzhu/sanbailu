@@ -18,6 +18,9 @@ public class SPUtils {
     private static final String ADDRESS                         = "address";
     private static final String IS_LOGIN                        = "isLogin";
 
+    /** 新增 */
+    private static final String PASSWORD                        = "password";
+
     public SPUtils(Context context) {
         sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
     }
@@ -97,7 +100,13 @@ public class SPUtils {
         return sp.getBoolean(IS_LOGIN, false);
     }
 
+    public void setPasswod(String password) {
+        sp.edit().putString(PASSWORD, password).apply();
+    }
 
+    public String getPassword() {
+        return sp.getString(PASSWORD,"");
+    }
 
     /**  自己设置key */
 

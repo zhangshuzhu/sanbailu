@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".app.XunCaiApplication"
+        android:name=".app.SApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -33,14 +33,22 @@
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan" />
-        <!--发单接单入口-->
-        <activity android:name="com.stephen.furniturerepair.gui.activity.EntranceActivity" />
+        <!--欢迎界面-->
+        <activity android:name="com.stephen.furniturerepair.gui.activity.guide.SplashActivity" />
+        <!--发单界面-->
+        <activity android:name="com.stephen.furniturerepair.gui.activity.IssuanceActivity"/>
         <!-- 登录注册 -->
         <activity android:name=".gui.activity.login.RegistActivity" />
-        <activity android:name=".gui.activity.login.LoginActivity" />
+        <activity android:name=".gui.activity.login.LoginActivity" android:launchMode="singleTop" />
         <activity android:name=".gui.activity.login.RegistInfoActivity" />
         <activity android:name=".gui.activity.login.ForGetPassWordActivity" />
+
+        <!--发单接单入口-->
+        <activity android:name="com.stephen.furniturerepair.gui.activity.EntranceActivity" />
+        <!--我的界面-->
+        <activity android:name="com.stephen.furniturerepair.gui.activity.four.MineActivity" />
 
         <!-- 百度位置 -->
         <service
@@ -50,7 +58,6 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="IRR0lQI7INPqWcaIUxlS8p2zQ7WBY5Uo" />
-        <!--<service android:name=".service.DataService" />-->
 
     </application>
 

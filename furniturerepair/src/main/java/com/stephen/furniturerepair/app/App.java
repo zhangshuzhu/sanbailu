@@ -13,22 +13,22 @@ import com.stephen.furniturerepair.service.BaiduLBSInfo;
 public class App {
 
     public static Context getContext(){
-       return XunCaiApplication.getInstance().getApplicationContext();
+       return SApplication.getInstance().getApplicationContext();
     }
 
     public static void exitApp(){
-        XunCaiApplication.getInstance().exitApp();
+        SApplication.getInstance().exitApp();
     }
 
     public static Activity getCurrentActivity(){
-        return XunCaiApplication.getInstance().getCurrentActivity();
+        return SApplication.getInstance().getCurrentActivity();
     }
 
-//    public static BaiduLBSInfo getBaiduLBSInfo(){
-//        return XunCaiApplication.getInstance().getBaiduLBSInfo();
-//    }
+    public static BaiduLBSInfo getBaiduLBSInfo(){
+        return SApplication.getInstance().getBaiduLBSInfo();
+    }
 
     public static void clearAllActivity(){
-        XunCaiApplication.getInstance().finishAllActivity();
+        SApplication.getInstance().finishAllActivity();
     }
 }

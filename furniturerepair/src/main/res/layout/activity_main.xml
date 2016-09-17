@@ -68,6 +68,8 @@
                 style="@style/ButtomBarImgBtn1"
                 android:drawableTop="@drawable/checked_main_mine"
                 android:text="我" />
+            <!--android:drawableTop="@drawable/checked_main_mine"-->
         </RadioGroup>
+
     </RelativeLayout>
 </RelativeLayout>

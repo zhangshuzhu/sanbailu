@@ -16,7 +16,7 @@ import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.App;
-import com.stephen.furniturerepair.app.XunCaiApplication;
+import com.stephen.furniturerepair.app.SApplication;
 import com.stephen.furniturerepair.common.interfaces.Constant;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.utils.LogUtils;
@@ -133,8 +133,8 @@ public class BaseFragment extends Fragment {
 
     public void showProgressDialog() {
         if (dialog_buffer == null) {
-            String string = XunCaiApplication.getInstance().getAppContext().getString(R.string.app_name);
-            String string1 = XunCaiApplication.getInstance().getAppContext().getString(R.string.dialog_loading);
+            String string = SApplication.getInstance().getAppContext().getString(R.string.app_name);
+            String string1 = SApplication.getInstance().getAppContext().getString(R.string.dialog_loading);
             dialog_buffer = new BufferDialog(App.getContext(),string,string1,R.style.MyDialogStyleTop);
         }
         dialog_buffer.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失

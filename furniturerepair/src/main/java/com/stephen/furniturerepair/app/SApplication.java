@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
-import android.text.TextUtils;
 import android.util.Log;
 
 import com.baidu.location.BDLocation;
@@ -15,12 +13,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.Poi;
 import com.baidu.mapapi.SDKInitializer;
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.common.CityInfo;
-import com.stephen.furniturerepair.common.Config;
-import com.stephen.furniturerepair.common.DataService;
 import com.stephen.furniturerepair.common.base.BaseActivity;
-import com.stephen.furniturerepair.common.interfaces.Constant;
-import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.utils.UniverImageLoadConfig;
 import com.stephen.furniturerepair.service.BaiduLBSInfo;
 
@@ -33,9 +26,9 @@ import java.util.List;
  * Created by Stephen on 2016/4/3 0003.
  * Emial: 895745843@qq.com
  */
-public class XunCaiApplication extends Application {
+public class SApplication extends Application {
 
-    private static XunCaiApplication instance = null;
+    private static SApplication instance = null;
     private AppContext mAppContext = null;
     private List<BaseActivity> mActivities = new ArrayList<>();
 
@@ -52,9 +45,10 @@ public class XunCaiApplication extends Application {
         LitePalApplication.initialize(this);
 
         //百度定位
-        initBDMap();
+        //initBDMap();
+        initBaiduLBS();
     }
-    public static XunCaiApplication getInstance(){
+    public static SApplication getInstance(){
         return instance;
     }
 
@@ -90,7 +84,8 @@ public class XunCaiApplication extends Application {
         System.exit(0);
     }
 
-/*    private void initBaiduLBS() {
+    private void initBaiduLBS() {
+        SDKInitializer.initialize(getApplicationContext());
         mLocationClient = new LocationClient(getApplicationContext());     //声明LocationClient类
         LocationClientOption option = new LocationClientOption();
         option.setScanSpan(60000);
@@ -193,59 +188,5 @@ public class XunCaiApplication extends Application {
             return null;
         }
         return mBaiduLBSInfo;
-    }*/
-
-    public static LocationClient mLocClient;
-    public static ServiceConnection conn;
-    private long preTime = 0;
-
-    private void initBDMap() {
-        SDKInitializer.initialize(getApplicationContext());
-        LocationClientOption option = new LocationClientOption();
-        int span = 60000;
-        option.setScanSpan(span);//可选，默认0，即仅定位一次，设置发起定位请求的间隔需要大于等于1000ms才是有效的
-        option.setIsNeedAddress(true);
-        mLocClient = new LocationClient(this);
-        mLocClient.setLocOption(option);
-        mLocClient.registerLocationListener(new BDLocationListener() {
-            @Override
-            public void onReceiveLocation(BDLocation location) {
-                String lat = location.getLatitude() + "";
-                String lng = location.getLongitude() + "";
-                String city = location.getCity();
-                if (city != null) {
-                    if (Config.CITY_INFO == null) {
-//                        if (cityInfos != null) {
-//                            for (int i = 0; i < cityInfos.size(); i++) {
-//                                CityInfo cityInfo = cityInfos.get(i);
-//                                if (TextUtils.isEmpty(city) || TextUtils.isEmpty(cityInfo.cityName)) {
-//                                    return;
-//                                }
-//                                if (cityInfo.cityName.contains(city) || city.contains(cityInfo.cityName)) {
-//                                    Config.CITY_INFO = cityInfo;
-//                                    sendBroadcast(new Intent("cityChanged"));
-//                                    break;
-//                                }
-//                            }
-//                        }
-                    }
-                }
-                if (TextUtils.isEmpty(lat) && TextUtils.isEmpty(lng)) {
-                    Constant.latitude = Double.valueOf(lat);
-                    Constant.longitude = Double.valueOf(lng);
-                } else {
-                    return;
-                }
-                SPUtils.getInstance(XunCaiApplication.getInstance()).setString("Latitude",Constant.latitude + "");
-                SPUtils.getInstance(XunCaiApplication.getInstance()).setString("Longitude",Constant.longitude + "");
-                if (System.currentTimeMillis() - preTime < 20000) {
-                    return;
-                }
-                preTime = System.currentTimeMillis();
-                startService(new Intent(XunCaiApplication.getInstance(), DataService.class));
-            }
-
-        });
-        mLocClient.start();
     }
 }

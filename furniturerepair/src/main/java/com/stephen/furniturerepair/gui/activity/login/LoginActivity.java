@@ -1,5 +1,6 @@
 package com.stephen.furniturerepair.gui.activity.login;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import com.stephen.furniturerepair.common.utils.LogUtils;
 import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.utils.Validator;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
+import com.stephen.furniturerepair.gui.activity.EntranceActivity;
 import com.stephen.furniturerepair.gui.beans.UserInfoBean;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -76,7 +78,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
      * @param phoneNumber 手机号
      * @param password    密码
      */
-    private void sendRequest(String phoneNumber, String password) {
+    private void sendRequest(final String phoneNumber, final String password) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
         list.add(new BasicNameValuePair("username", phoneNumber));
         list.add(new BasicNameValuePair("password", password));
@@ -90,6 +92,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             int code = jsonObject.getInt("code");
                             if (code == 100) {
                                 Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                                SPUtils.getInstance(LoginActivity.this).setLoginState(true);
+                                SPUtils.getInstance(LoginActivity.this).setUserName(phoneNumber);
+                                SPUtils.getInstance(LoginActivity.this).setPasswod(password);
+//                                startActivity(new Intent(LoginActivity.this, EntranceActivity.class));
+                                setResult(Activity.RESULT_OK, new Intent());
+                                finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();

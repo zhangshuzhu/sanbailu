@@ -9,11 +9,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 
-import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.app.XunCaiApplication;
+import com.stephen.furniturerepair.app.SApplication;
 import com.stephen.furniturerepair.common.interfaces.Constant;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.utils.LogUtils;
@@ -42,7 +41,7 @@ public abstract class BaseActivity extends FragmentActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LogUtils.E("onCreate Activity: " + getClass().getSimpleName());
-        XunCaiApplication.getInstance().putActivity(this);
+        SApplication.getInstance().putActivity(this);
 //        setTranslucentStatus();
         view = LayoutInflater.from(this).inflate(setView(), null);
         if (view == null) {
@@ -153,8 +152,8 @@ public abstract class BaseActivity extends FragmentActivity{
 
     public void showProgressDialog() {
         if (dialog_buffer == null) {
-            String string = XunCaiApplication.getInstance().getAppContext().getString(R.string.app_name);
-            String string1 = XunCaiApplication.getInstance().getAppContext().getString(R.string.dialog_loading);
+            String string = SApplication.getInstance().getAppContext().getString(R.string.app_name);
+            String string1 = SApplication.getInstance().getAppContext().getString(R.string.dialog_loading);
             dialog_buffer = new BufferDialog(this,string,string1,R.style.MyDialogStyleTop);
         }
         dialog_buffer.setCanceledOnTouchOutside(false);// 设置点击屏幕Dialog不消失
@@ -175,6 +174,6 @@ public abstract class BaseActivity extends FragmentActivity{
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        XunCaiApplication.getInstance().removoeActivity(BaseActivity.this);
+        SApplication.getInstance().removoeActivity(BaseActivity.this);
     }
 }

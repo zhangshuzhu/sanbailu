@@ -8,13 +8,44 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <com.stephen.furniturerepair.gui.widget.MyTextView
+
+    <LinearLayout
+        android:id="@+id/layout_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="20dp"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/dot_activity_main" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginRight="3dp"
+            android:src="@drawable/dot_activity_main" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:src="@drawable/dot_activity_main" />
+    </LinearLayout>
+
+    <Button
         android:id="@+id/textView_guide_join"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
+        android:background="@drawable/bg_rectangle_stroke_corners_red"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingLeft="20dp"
@@ -23,6 +54,5 @@
         android:text="立即体验"
         android:textSize="20sp"
         android:visibility="invisible" />
-    <!--android:background="@drawable/bg_rectangle_stroke_corners_red"-->
 
 </RelativeLayout>
