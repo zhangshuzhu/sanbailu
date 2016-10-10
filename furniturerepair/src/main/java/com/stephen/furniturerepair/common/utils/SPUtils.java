@@ -17,6 +17,7 @@ public class SPUtils {
     private static final String STREET                          = "street";
     private static final String ADDRESS                         = "address";
     private static final String IS_LOGIN                        = "isLogin";
+    private static final String USERINFO                        = "USER_INFO";
 
     /** 新增 */
     private static final String PASSWORD                        = "password";
@@ -106,6 +107,15 @@ public class SPUtils {
 
     public String getPassword() {
         return sp.getString(PASSWORD,"");
+    }
+
+
+    public String getUserInfo() {
+        return sp.getString(USERINFO,"");
+    }
+
+    public void setUserInfo(String password) {
+        sp.edit().putString(USERINFO, password).apply();
     }
 
     /**  自己设置key */

@@ -1,5 +1,6 @@
 package com.stephen.furniturerepair.gui.activity.login;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -11,9 +12,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
+import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.app.GlobalVariable;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
@@ -51,6 +51,8 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
     TextView textViewSendVerifyRequest;
     @Bind(R.id.titleBar)
     TitleBar titleBar;
+    @Bind(R.id.editText6)
+    EditText editText6;
 
     @Override
     protected int setView() {
@@ -76,16 +78,16 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
 
     private void sendRequest(String phoneNumber) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-        list.add(new BasicNameValuePair("phoneNum", phoneNumber));
-        list.add(new BasicNameValuePair("purpose", String.valueOf(2)));
-        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
+        list.add(new BasicNameValuePair("mobile", phoneNumber));
+//        list.add(new BasicNameValuePair("purpose", String.valueOf(2)));
+//        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
         try {
-            getDataFromServer(list, URL.URL_GET_VERIFICATION, new GlobalCallBack() {
+            getDataFromServer(list, URL.URL_SEND_MOBILE_SMS, new GlobalCallBack() {
                 @Override
                 public void processData(String paramObject) {
+                    registPhoneNumber = editText.getText().toString();
+                    startToTiming();
                     if (DataUtils.dealToastMsgWithRightAndWrong(paramObject)) {
-                        registPhoneNumber = editText.getText().toString();
-                        startToTiming();
                     }
                 }
 
@@ -142,15 +144,15 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
                     Toast.makeText(ForGetPassWordActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(s2)) {
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                } else if (!Validator.isPassword(s3)) {
+                } /*else if (!Validator.isPassword(s3)) {
                     Toast.makeText(ForGetPassWordActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(registPhoneNumber)) {
+                }  else if (TextUtils.isEmpty(registPhoneNumber)) {
                     Toast.makeText(this, "注册前，请获取验证码", Toast.LENGTH_SHORT).show();
                 } else if (!ss.equals(registPhoneNumber)) {
                     Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
-                } else {
+                }*/ else {
                     // TODO: 2016/5/12 0012 重置密码
-                    resetPassWord(registPhoneNumber,s2,s3);
+                    resetPassWord(registPhoneNumber, s2, editText6.getText().toString(), s3);
                 }
                 break;
         }
@@ -198,20 +200,34 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
         finish();
     }
 
-    private void resetPassWord(String phoneNumber, String verifyCode, String password) {
+    /**
+     * 参数：
+     * account=账号，
+     * mobile=手机号
+     * captcha=码证码
+     *
+     * @param phoneNumber
+     * @param verifyCode
+     * @param password
+     */
+    private void resetPassWord(String phoneNumber, String verifyCode, String account, String password) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-        list.add(new BasicNameValuePair("phoneNum", phoneNumber));
-        list.add(new BasicNameValuePair("verifyCode", verifyCode));
+        list.add(new BasicNameValuePair("mobile", phoneNumber));
+        list.add(new BasicNameValuePair("captcha", verifyCode));
+        list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("password", password));
 //        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
 //        list.add(new BasicNameValuePair("userId", SPUtils.getInstance(ForGetPassWordActivity.this).getUserId()));
         try {
-            getDataFromServer(list, URL.URL_LOGIN_MODIFY_PASSWORD, new GlobalCallBack() {
+            getDataFromServer(list, URL.URL_FORGET_PASSWORD, new GlobalCallBack() {
                 @Override
                 public void processData(String paramObject) {
                     if (DataUtils.dealResultSeccess(paramObject)) {
-                        Toast.makeText(ForGetPassWordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(ForGetPassWordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
                         finish();
+                        startActivity(new Intent(ForGetPassWordActivity.this, MainActivity.class));
+                    } else {
+                        Toast.makeText(ForGetPassWordActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
                     }
                 }
 

@@ -16,6 +16,7 @@ import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
+import com.stephen.furniturerepair.common.bean.User;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.interfaces.TitleBarListener;
 import com.stephen.furniturerepair.common.utils.DataUtils;
@@ -91,8 +92,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                             JSONObject jsonObject = new JSONObject(paramObject);
                             int code = jsonObject.getInt("code");
                             if (code == 100) {
-                                Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-                                SPUtils.getInstance(LoginActivity.this).setLoginState(true);
+                                if (!GsonUtils.isEmpty(jsonObject.getString("return"))) {
+                                    Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
+                                    SPUtils.getInstance(LoginActivity.this).setLoginState(true);
+                                    LogUtils.E(jsonObject.getString("return"));
+
+                                    User aReturn = GsonUtils.fromJson(jsonObject.getString("return"), User.class);
+
+                                    if (aReturn != null) {
+
+                                       SPUtils.getInstance(LoginActivity.this).setUserInfo(GsonUtils.toJson(aReturn));
+                                        LogUtils.E("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+                                    }
+                                }
+
                                 SPUtils.getInstance(LoginActivity.this).setUserName(phoneNumber);
                                 SPUtils.getInstance(LoginActivity.this).setPasswod(password);
 //                                startActivity(new Intent(LoginActivity.this, EntranceActivity.class));

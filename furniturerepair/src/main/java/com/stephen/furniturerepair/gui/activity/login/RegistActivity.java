@@ -51,7 +51,6 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
     @Bind(R.id.titleBar)
     TitleBar titleBar;
 
-    private Handler handler = new Handler();
     private Timer timer;
     private int second = 60;
 
@@ -75,17 +74,13 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
 
     private void sendRequest(String phoneNumber) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-        list.add(new BasicNameValuePair("phoneNum", phoneNumber));
-        list.add(new BasicNameValuePair("purpose", String.valueOf(0)));
-        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
+        list.add(new BasicNameValuePair("mobile", phoneNumber));
         try {
-            getDataFromServer(list, URL.URL_GET_VERIFICATION, new GlobalCallBack() {
+            getDataFromServer(list, URL.URL_SEND_MOBILE_SMS, new GlobalCallBack() {
                 @Override
                 public void processData(String paramObject) {
-                    if (DataUtils.dealToastMsgWithRightAndWrong(paramObject)) {
-                        registPhoneNumber = editText.getText().toString();
-                        startToTiming();
-                    }
+                    registPhoneNumber = editText.getText().toString();
+                    startToTiming();
                 }
 
                 @Override
@@ -148,14 +143,18 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
                 } else if(!ss.equals(registPhoneNumber)){
                     Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
                 } else {
-                    Intent intent = new Intent(RegistActivity.this, RegistInfoActivity.class);
-                    intent.putExtra("phoneNumber", ss);
-                    intent.putExtra("verification", s2);
-                    intent.putExtra("password", s3);
-                    startActivity(intent);
+                    sendReques2t(ss,s2,s3);
                 }
                 break;
         }
+    }
+
+    private void openStartRegisterInfoActivity(String ss, String s2, String s3) {
+        Intent intent = new Intent(RegistActivity.this, RegistInfoActivity.class);
+        intent.putExtra("phoneNumber", ss);
+        intent.putExtra("verification", s2);
+        intent.putExtra("password", s3);
+        startActivity(intent);
     }
 
     /**
@@ -198,5 +197,29 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
     @Override
     public void clickTitleBarLeft() {
         finish();
+    }
+
+
+    private void sendReques2t(final String phoneNumber, final String verification, final String s3) {
+        List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+        list.add(new BasicNameValuePair("mobile", phoneNumber));
+        list.add(new BasicNameValuePair("captcha", verification));
+        try {
+            getDataFromServer(list, URL.URL_CHECK_SMS, new GlobalCallBack() {
+                @Override
+                public void processData(String paramObject) {
+                    if (!DataUtils.dealResultFail(paramObject, 100)) {
+                        openStartRegisterInfoActivity(phoneNumber, verification, s3);
+                    }
+                }
+
+                @Override
+                public void responseError(String string) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

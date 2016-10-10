@@ -49,6 +49,8 @@
         <activity android:name="com.stephen.furniturerepair.gui.activity.EntranceActivity" />
         <!--我的界面-->
         <activity android:name="com.stephen.furniturerepair.gui.activity.four.MineActivity" />
+        <activity android:name="com.stephen.furniturerepair.gui.activity.four.MineInfoActivity" />
+        <activity android:name="com.stephen.furniturerepair.gui.activity.four.ChangePasswordActivity" />
 
         <!-- 百度位置 -->
         <service

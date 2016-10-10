@@ -13,6 +13,7 @@ import org.json.JSONObject;
  * Emial: 895745843@qq.com
  */
 public class DataUtils {
+    private static final int SECCESS_CODE = 100;
 
     /**
      * 成功返 回data数据 失败 弹出土司
@@ -20,16 +21,26 @@ public class DataUtils {
      * @return 成功 / 失败
      */
     public static String dealResultData(String json) {
+       return dealResultData(json, SECCESS_CODE);
+    }
+
+    /**
+     * 成功返 回data数据 失败 弹出土司
+     * @param json json数据
+     * @return 成功 / 失败
+     */
+    public static String dealResultData(String json, int seccessCode) {
         try {
             JSONObject jsonObject = new JSONObject(json);
             int code = jsonObject.getInt("code");
-            if (code != 200) {
-                String msg = jsonObject.getString("msg");
+            if (code != seccessCode) {
+                String msg = jsonObject.getString("messge");
+                LogUtils.E("HTTP erroCode: "  + code + " errorMsg: " + msg );
                 if (!TextUtils.isEmpty(msg)) {
                     Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
                 }
             } else {
-                return jsonObject.getString("data");
+                return jsonObject.getString("return");
             }
         } catch (JSONException e) {
             LogUtils.E(json);
@@ -47,8 +58,8 @@ public class DataUtils {
         try {
             JSONObject jsonObject = new JSONObject(json);
             int code = jsonObject.getInt("code");
-            if (code == 200) {
-                String msg = jsonObject.getString("msg");
+            if (code == SECCESS_CODE) {
+                String msg = jsonObject.getString("messge");
                 if (!TextUtils.isEmpty(msg)) {
                     Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
                 }
@@ -67,12 +78,21 @@ public class DataUtils {
      * @return 失败 true
      */
     public static boolean dealResultFail(String json) {
+        return dealResultFail(json, SECCESS_CODE);
+    }
+
+    /**
+     * 失败 土司
+     * @param json json数据
+     * @return 失败 true
+     */
+    public static boolean dealResultFail(String json, int SeccessCode) {
         try {
             JSONObject jsonObject = new JSONObject(json);
-            String data = jsonObject.getString("data");
+            String data = jsonObject.getString("return");
             int code = jsonObject.getInt("code");
-            String msg = jsonObject.getString("msg");
-            if (code != 200) {
+            String msg = jsonObject.getString("messge");
+            if (code != SeccessCode) {
                 if (!TextUtils.isEmpty(msg)) {
                     Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
                 }
@@ -93,7 +113,7 @@ public class DataUtils {
         try {
             JSONObject jsonObject = new JSONObject(json);
             int code = jsonObject.getInt("code");
-            String msg = jsonObject.getString("msg");
+            String msg = jsonObject.getString("messge");
             if (TextUtils.isEmpty(msg)) {
                 return;
             }
@@ -113,11 +133,11 @@ public class DataUtils {
         try {
             JSONObject jsonObject = new JSONObject(json);
             int code = jsonObject.getInt("code");
-            String msg = jsonObject.getString("msg");
+            String msg = jsonObject.getString("messge");
             if (!TextUtils.isEmpty(msg)) {
                 Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
             }
-            if (code == 200) {
+            if (code == SECCESS_CODE) {
                 return true;
             }
         } catch (JSONException e) {
