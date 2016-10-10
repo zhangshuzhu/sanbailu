@@ -18,7 +18,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.common.base.BaseFragment;
-import com.stephen.furniturerepair.common.interfaces.Constant;
 import com.stephen.furniturerepair.common.utils.LogUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
 import com.stephen.furniturerepair.service.BaiduLBSInfo;
@@ -52,12 +51,14 @@ public class OneFragment extends BaseFragment {
         titleBarShopCart.setTitlBartitle("首页");
 
         BaiduLBSInfo baiduLBSInfo = App.getBaiduLBSInfo();
-        double latitude = baiduLBSInfo.getLatitude();
-        double lontitude = baiduLBSInfo.getLontitude();
-        LogUtils.E(TAG, "--------->latitude:" + latitude);
-        LogUtils.E(TAG, "--------->lontitude:" + lontitude);
+        if (baiduLBSInfo != null) {
+            double latitude = baiduLBSInfo.getLatitude();
+            double lontitude = baiduLBSInfo.getLontitude();
+            LogUtils.E(TAG, "--------->latitude:" + latitude);
+            LogUtils.E(TAG, "--------->lontitude:" + lontitude);
 
-        initBLSMap(latitude, lontitude);
+            initBLSMap(latitude, lontitude);
+        }
     }
 
     @Override
@@ -117,7 +118,7 @@ public class OneFragment extends BaseFragment {
     }
 
     //移动地图 点击定位按钮 地图移动回当前点
-    public void reLocation(LatLng ll){
+    public void reLocation(LatLng ll) {
         MapStatusUpdate u = MapStatusUpdateFactory.newLatLng(ll);
         mBaiduMap.animateMapStatus(u);
     }

@@ -2,21 +2,21 @@ apply plugin: 'com.android.application'
 
 android {
     signingConfigs {
-        debug {
-            keyAlias 'androiddebugkey'
-            keyPassword 'android'
-            storeFile file('C:\\Users\\Stephen\\.android\\debug.keystore')
-            storePassword 'android'
-        }
-        release {
-            keyAlias 'sanbailu'
-            keyPassword '1234567890'
-            storeFile file('D:\\AndroidStudio_workspace\\FurnitureRepairProject\\sanbailu\\sanbailu.jks')
-            storePassword '1234567890'
-        }
+//        debug {
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'android'
+//            storeFile file('C:\\Users\\Stephen\\.android\\debug.keystore')
+//            storePassword 'android'
+//        }
+//        release {
+//            keyAlias 'sanbailu'
+//            keyPassword '1234567890'
+//            storeFile file('D:\\AndroidStudio_workspace\\FurnitureRepairProject\\sanbailu\\sanbailu.jks')
+//            storePassword '1234567890'
+//        }
     }
     compileSdkVersion 22
-    buildToolsVersion "23.0.3"
+    buildToolsVersion "23.0.2"
 
     defaultConfig {
         applicationId "com.stephen.furniturerepair"

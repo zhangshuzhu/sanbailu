@@ -4,7 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/furniturerepair/furniturerepair.iml" filepath="$PROJECT_DIR$/furniturerepair/furniturerepair.iml" />
       <module fileurl="file://$PROJECT_DIR$/library_pickerview/library_pickerview.iml" filepath="$PROJECT_DIR$/library_pickerview/library_pickerview.iml" />
-      <module fileurl="file://$PROJECT_DIR$/sanbailu.iml" filepath="$PROJECT_DIR$/sanbailu.iml" />
+      <module fileurl="file://$PROJECT_DIR$/sanbailu-master.iml" filepath="$PROJECT_DIR$/sanbailu-master.iml" />
     </modules>
   </component>
 </project>
