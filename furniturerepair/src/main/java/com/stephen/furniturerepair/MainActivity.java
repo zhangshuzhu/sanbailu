@@ -128,6 +128,7 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 currentIndex = 1;
                 showIndex = 1;
                 break;
+//            发单
             case R.id.radio2:LogUtils.E("TAG", "-------------onCheckedChanged()  2");
 
                 if (currentIndex == 2) {

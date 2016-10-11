@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stephen.furniturerepair.MainActivity;
@@ -30,6 +32,8 @@ import butterknife.OnClick;
 /**
  * Created by Stephen on 09/16/2016.
  * Emial: 895745843@qq.com
+ * <p/>
+ * 我的
  */
 public class MineActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft {
 
@@ -39,6 +43,10 @@ public class MineActivity extends BaseActivity implements TitleBarListener.Liste
     LinearLayout linearLayoutMineHeader;
     @Bind(R.id.linearLayout_loginOut)
     LinearLayout linearLayoutLoginOut;
+    @Bind(R.id.iv_mine_avatar)
+    ImageView ivMineAvatar;
+    @Bind(R.id.tv_mine_name)
+    TextView tvMineName;
 
     @Override
     protected int setView() {
@@ -51,24 +59,24 @@ public class MineActivity extends BaseActivity implements TitleBarListener.Liste
         ButterKnife.bind(this);
         titleBar.setTitlBartitle("我的");
         titleBar.setTitlBarLeftImageButtonResuource(R.mipmap.icon_back, this);
+        init();
     }
 
-
-//    @OnClick()
-//    public void onClick() {
-//    }
+    private void init() {
+        String userName = SPUtils.getInstance(this).getUserName();
+        if (!TextUtils.isEmpty(userName))
+        tvMineName.setText(userName);
+    }
 
 
     /**
      * 退出登录
      *
-     * @param phoneNumber 手机号
-     * @param password    密码
+     * @param id id
      */
-    private void sendRequest(String phoneNumber, String password) {
+    private void sendRequest(String id) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-        list.add(new BasicNameValuePair("username", phoneNumber));
-        list.add(new BasicNameValuePair("password", password));
+        list.add(new BasicNameValuePair("id", id));
         try {
             getDataFromServer(list, URL.URL_LOGINOUT, new GlobalCallBack() {
                 @Override
@@ -77,8 +85,9 @@ public class MineActivity extends BaseActivity implements TitleBarListener.Liste
                         try {
                             JSONObject jsonObject = new JSONObject(paramObject);
                             int code = jsonObject.getInt("code");
+                            String message = jsonObject.getString("message");
+                            Toast.makeText(MineActivity.this, message, Toast.LENGTH_SHORT).show();
                             if (code == 100) {
-                                Toast.makeText(MineActivity.this, "退出成功！", Toast.LENGTH_SHORT).show();
                                 SPUtils.getInstance(MineActivity.this).setLoginState(false);
                                 startActivity(new Intent(MineActivity.this, MainActivity.class));
                                 finish();
@@ -121,10 +130,11 @@ public class MineActivity extends BaseActivity implements TitleBarListener.Liste
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.linearLayout_mine_header:
-                startActivity(new Intent(MineActivity.this,MineInfoActivity.class));
+                startActivity(new Intent(MineActivity.this, MineInfoActivity.class));
                 break;
+//            退出登录
             case R.id.linearLayout_loginOut:
-                sendRequest(SPUtils.getInstance(MineActivity.this).getUserName(), SPUtils.getInstance(MineActivity.this).getPassword());
+                sendRequest(SPUtils.getInstance(MineActivity.this).getUserId());
                 break;
         }
     }

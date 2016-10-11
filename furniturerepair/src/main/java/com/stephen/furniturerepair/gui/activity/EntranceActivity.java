@@ -18,6 +18,7 @@ import butterknife.OnClick;
 /**
  * Created by Stephen on 09/15/2016.
  * Emial: 895745843@qq.com
+ *  首页
  */
 public class EntranceActivity extends BaseActivity {
 
@@ -51,7 +52,7 @@ public class EntranceActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.button:
-                // TODO: 09/15/2016 发单界面
+                // 发单界面
                 if (SPUtils.getInstance(this).getLoginState()) {
                     startActivity(new Intent(EntranceActivity.this, IssuanceActivity.class));
                 } else {
@@ -59,7 +60,7 @@ public class EntranceActivity extends BaseActivity {
                 }
                 break;
             case R.id.button2:
-                // TODO: 09/15/2016 接单 进入主界面
+                // 接单 进入主界面
                 Intent intent = new Intent(EntranceActivity.this, MainActivity.class);
                 intent.putExtras(new Bundle(1));
                 startActivity(intent);
@@ -71,6 +72,7 @@ public class EntranceActivity extends BaseActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == -1) {
             switch (requestCode) {
+//                登录返回
                 case CODE_ISSUANCE:
                     Intent intent = new Intent(EntranceActivity.this, IssuanceActivity.class);
                     intent.putExtras(new Bundle(1));

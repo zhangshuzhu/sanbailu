@@ -43,14 +43,15 @@
         <activity android:name=".gui.activity.login.RegistActivity" />
         <activity android:name=".gui.activity.login.LoginActivity" android:launchMode="singleTop" />
         <activity android:name=".gui.activity.login.RegistInfoActivity" />
-        <activity android:name=".gui.activity.login.ForGetPassWordActivity" />
+        <activity android:name=".gui.activity.login.ForgetPasswordActivity" />
 
         <!--发单接单入口-->
         <activity android:name="com.stephen.furniturerepair.gui.activity.EntranceActivity" />
         <!--我的界面-->
         <activity android:name="com.stephen.furniturerepair.gui.activity.four.MineActivity" />
         <activity android:name="com.stephen.furniturerepair.gui.activity.four.MineInfoActivity" />
-        <activity android:name="com.stephen.furniturerepair.gui.activity.four.ChangePasswordActivity" />
+        <activity android:name="com.stephen.furniturerepair.gui.activity.four.ChangePasswordActivity"
+            android:windowSoftInputMode="adjustResize"/>
 
         <!-- 百度位置 -->
         <service

@@ -2,7 +2,6 @@ package com.stephen.furniturerepair.gui.activity.login;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.app.GlobalVariable;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
@@ -126,6 +124,7 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
                 LogUtils.E("---------------请求发送验证码");
                 sendRequest(editText.getText().toString());
                 break;
+//            下一步填写注册信息
             case R.id.register_next:
                 String ss = editText.getText().toString();
                 String s2 = editText2.getText().toString();
@@ -155,6 +154,7 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
         intent.putExtra("verification", s2);
         intent.putExtra("password", s3);
         startActivity(intent);
+        finish();
     }
 
     /**
@@ -208,7 +208,7 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
             getDataFromServer(list, URL.URL_CHECK_SMS, new GlobalCallBack() {
                 @Override
                 public void processData(String paramObject) {
-                    if (!DataUtils.dealResultFail(paramObject, 100)) {
+                    if (!DataUtils.dealResultFail(paramObject, 100)) {//正确
                         openStartRegisterInfoActivity(phoneNumber, verification, s3);
                     }
                 }

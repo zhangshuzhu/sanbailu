@@ -7,22 +7,25 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.TextView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.app.GlobalVariable;
+import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.utils.DataUtils;
 import com.stephen.furniturerepair.common.utils.GsonUtils;
+import com.stephen.furniturerepair.common.utils.LogUtils;
 import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
 import com.stephen.furniturerepair.gui.beans.UserInfoBean;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +36,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Stephen on 2016/4/3 0003.
  * Emial: 895745843@qq.com
+ *
+ * 补充注册信息
  */
 public class RegistInfoActivity extends BaseActivity {
     @Bind(R.id.titleBar)
@@ -41,8 +46,6 @@ public class RegistInfoActivity extends BaseActivity {
     EditText editText;
     @Bind(R.id.editText2)
     EditText editText2;
-    @Bind(R.id.editText3)
-    TextView editText3;
     @Bind(R.id.editText4)
     EditText editText4;
     @Bind(R.id.editText5)
@@ -69,11 +72,15 @@ public class RegistInfoActivity extends BaseActivity {
     EditText editText14;
     @Bind(R.id.editText15)
     EditText editText15;
+    @Bind(R.id.rg_sex)
+    RadioGroup rgSex;
     private String phoneNumber;
     private String verification;
     private String passWord;
     //    private com.bigkoo.pickerview.OptionsPopupWindow pwOptions;
     private boolean isClickCity = true;
+    private String sex = "男";
+    private String type = "0";
 
     @Override
     protected int setView() {
@@ -84,34 +91,14 @@ public class RegistInfoActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        setTitle("注册");
+        setTitle("注册信息");
         Intent intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
         verification = intent.getStringExtra("verification");
         passWord = intent.getStringExtra("password");
-        regiterNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String value = editText.getText().toString().trim();
-                String value1 = editText2.getText().toString().trim();
-                String value2 = editText3.getText().toString().trim();
-                String value3 = editText4.getText().toString().trim();
-                String value4 = editText5.getText().toString().trim();
-                if (TextUtils.isEmpty(value)) {
-                    Toast.makeText(RegistInfoActivity.this, "姓名不能为空", Toast.LENGTH_SHORT).show();
-                }/* else if (TextUtils.isEmpty(value1)) {
-                    Toast.makeText(RegistInfoActivity.this, "店铺名称不能为空", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(value2)) {
-                    Toast.makeText(RegistInfoActivity.this, "城市名称不能为空", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(value3)) {
-                    Toast.makeText(RegistInfoActivity.this, "街道名字不能为空", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(value4)) {
-                    Toast.makeText(RegistInfoActivity.this, "请输入您的详细地址", Toast.LENGTH_SHORT).show();
-                }*/ else {
-                    goRegist(value, value1);
-                }
-            }
-        });
+        editText6.setText(phoneNumber);
+        initListener();
+
 
 //        initCityData();
 //        editText3.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +115,51 @@ public class RegistInfoActivity extends BaseActivity {
 //        });
     }
 
+    private void initListener() {
+        //        确定注册信息
+        regiterNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String value = editText.getText().toString().trim();//姓名
+                String value1 = editText2.getText().toString().trim();//账号
+                type = editText4.getText().toString().trim();//用户类型
+                if (TextUtils.isEmpty(type))
+                    type = "0";
+                String value4 = editText5.getText().toString().trim();
+                if (TextUtils.isEmpty(value)) {
+                    Toast.makeText(RegistInfoActivity.this, "姓名不能为空", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(value1)) {
+                    Toast.makeText(RegistInfoActivity.this, "账号不能为空", Toast.LENGTH_SHORT).show();
+                } /*else if (TextUtils.isEmpty(value2)) {
+                    Toast.makeText(RegistInfoActivity.this, "城市名称不能为空", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(value3)) {
+                    Toast.makeText(RegistInfoActivity.this, "街道名字不能为空", Toast.LENGTH_SHORT).show();
+                } else if (TextUtils.isEmpty(value4)) {
+                    Toast.makeText(RegistInfoActivity.this, "请输入您的详细地址", Toast.LENGTH_SHORT).show();
+                }*/ else {
+                    goRegist(value, value1);
+                }
+            }
+        });
+//        性别选择
+        rgSex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+//            女
+                    case R.id.rb_female:
+                        sex = "女";
+                        break;
+//            男
+                    case R.id.rb_male:
+                        sex = "男";
+                        break;
+
+                }
+            }
+        });
+    }
+
     private void goRegist(String name, String account) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 //        list.add(new BasicNameValuePair("phoneNum", phoneNumber));
@@ -135,12 +167,11 @@ public class RegistInfoActivity extends BaseActivity {
 //        list.add(new BasicNameValuePair("password", passWord));
 
 
-
         list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("password", passWord));
         list.add(new BasicNameValuePair("name", name));
-        list.add(new BasicNameValuePair("sex", "男"));
-        list.add(new BasicNameValuePair("type", "0")); //类型(0:用户注册，1：修补工2：团队)
+        list.add(new BasicNameValuePair("sex", sex));
+        list.add(new BasicNameValuePair("type", type)); //类型(0:用户注册，1：修补工2：团队)
         list.add(new BasicNameValuePair("address", "北京市海淀区西北旺东路10号院百度科技园1号楼"));
         list.add(new BasicNameValuePair("mobile", phoneNumber));
         list.add(new BasicNameValuePair("cert_type", "身份证"));
@@ -159,9 +190,19 @@ public class RegistInfoActivity extends BaseActivity {
                     if (TextUtils.isEmpty(paramObject)) {
                         Toast.makeText(RegistInfoActivity.this, "error!", Toast.LENGTH_SHORT).show();
                     } else {
-                        String s = DataUtils.dealResultData(paramObject, 100);
-                        if (s != null) {
-                            startActivity(new Intent(RegistInfoActivity.this,MainActivity.class));
+                        try {
+                            JSONObject jsonObject = new JSONObject(paramObject);
+                            int code = jsonObject.getInt("code");
+                            String msg = jsonObject.getString("message");
+                            if (!TextUtils.isEmpty(msg)) {
+                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
+                            }
+                            if (code == 100) {
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            LogUtils.E(paramObject);
+                            e.printStackTrace();
                         }
 //                        dealResult(paramObject);
                     }
@@ -194,7 +235,7 @@ public class RegistInfoActivity extends BaseActivity {
      * @param paramObject 数据
      */
     private void dealResult(String paramObject) {
-        String s = DataUtils.dealResultData(paramObject);
+        String s = DataUtils.dealResult(paramObject);
         if (!TextUtils.isEmpty(s)) {
             UserInfoBean userInfo = GsonUtils.fromJson(s, UserInfoBean.class);
             if (userInfo != null) {

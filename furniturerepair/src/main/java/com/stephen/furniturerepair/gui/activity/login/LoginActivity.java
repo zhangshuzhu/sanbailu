@@ -10,10 +10,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
-import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.bean.User;
@@ -25,7 +23,6 @@ import com.stephen.furniturerepair.common.utils.LogUtils;
 import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.utils.Validator;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
-import com.stephen.furniturerepair.gui.activity.EntranceActivity;
 import com.stephen.furniturerepair.gui.beans.UserInfoBean;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -91,26 +88,43 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         try {
                             JSONObject jsonObject = new JSONObject(paramObject);
                             int code = jsonObject.getInt("code");
-                            if (code == 100) {
-                                if (!GsonUtils.isEmpty(jsonObject.getString("return"))) {
-                                    Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-                                    SPUtils.getInstance(LoginActivity.this).setLoginState(true);
-                                    LogUtils.E(jsonObject.getString("return"));
+                            String message = jsonObject.getString("message");
+                            switch (code) {
+//                                登陆成功
+                                case 100:
+                                    if (!GsonUtils.isEmpty(jsonObject.getString("return"))) {
+                                        Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                        SPUtils.getInstance(LoginActivity.this).setLoginState(true);
+                                        LogUtils.E(jsonObject.getString("return"));
 
-                                    User aReturn = GsonUtils.fromJson(jsonObject.getString("return"), User.class);
-
-                                    if (aReturn != null) {
-
-                                       SPUtils.getInstance(LoginActivity.this).setUserInfo(GsonUtils.toJson(aReturn));
-                                        LogUtils.E("YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY");
+                                        User aReturn = GsonUtils.fromJson(jsonObject.getString("return"), User.class);
+                                        if (aReturn != null) {
+                                            SPUtils.getInstance(LoginActivity.this).setUserId(aReturn.getAid());
+                                            SPUtils.getInstance(LoginActivity.this).setUserName(aReturn.getName());
+                                            SPUtils.getInstance(LoginActivity.this).setUserInfo(GsonUtils.toJson(aReturn));
+                                        }
                                     }
-                                }
 
-                                SPUtils.getInstance(LoginActivity.this).setUserName(phoneNumber);
-                                SPUtils.getInstance(LoginActivity.this).setPasswod(password);
+                                    SPUtils.getInstance(LoginActivity.this).setUserName(phoneNumber);
+                                    SPUtils.getInstance(LoginActivity.this).setPasswod(password);
 //                                startActivity(new Intent(LoginActivity.this, EntranceActivity.class));
-                                setResult(Activity.RESULT_OK, new Intent());
-                                finish();
+                                    setResult(Activity.RESULT_OK, new Intent());
+                                    finish();
+                                    break;
+//                                用户已登录
+                                case 101:
+                                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    break;
+//                                账号不存在
+                                 case 103:
+                                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    break;
+
+//                                登陆失败
+                                case 302:
+                                    Toast.makeText(LoginActivity.this, message, Toast.LENGTH_SHORT).show();
+                                    break;
+
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -136,7 +150,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
      * @param paramObject 数据
      */
     private void dealResult(String paramObject) {
-        String s = DataUtils.dealResultData(paramObject);
+        String s = DataUtils.dealResult(paramObject);
         if (!TextUtils.isEmpty(s)) {
             UserInfoBean userInfo = GsonUtils.fromJson(s, UserInfoBean.class);
             if (userInfo != null) {
@@ -156,6 +170,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+//            登录
             case R.id.register_next:
                 String phoneNumber = editText.getText().toString();
                 String password = editText3.getText().toString();
@@ -167,11 +182,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     sendRequest(phoneNumber, password);
                 }
                 break;
+//            注册
             case R.id.textView_login_goRegist:
                 startActivity(new Intent(LoginActivity.this, RegistActivity.class));
                 break;
+//            忘记密码
             case R.id.textView_login_forget:
-                startActivity(new Intent(LoginActivity.this,ForGetPassWordActivity.class));
+                startActivity(new Intent(LoginActivity.this, ForgetPasswordActivity.class));
                 break;
         }
     }

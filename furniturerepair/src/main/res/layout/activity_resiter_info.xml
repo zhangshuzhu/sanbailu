@@ -39,11 +39,17 @@
 
                 <EditText
                     android:id="@+id/editText"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:textSize="12sp"
                     android:background="@color/transparent" />
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="(必填)" />
             </LinearLayout>
 
             <LinearLayout
@@ -66,11 +72,18 @@
 
                 <EditText
                     android:id="@+id/editText2"
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
                     android:background="@color/transparent"
-                    android:hint="账号限制12为有效数字 " />
+                    android:hint="限制以小写字母开头"
+                    android:textSize="12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="(必填)" />
             </LinearLayout>
 
             <LinearLayout
@@ -91,12 +104,34 @@
                     android:layout_marginRight="10dp"
                     android:text="性别" />
 
-                <TextView
-                    android:id="@+id/editText3"
+                <!--<TextView-->
+                <!--android:id="@+id/editText3"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"-->
+                <!--android:background="@color/transparent"-->
+                <!--android:gravity="center_vertical" />-->
+                <RadioGroup
+                    android:id="@+id/rg_sex"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/transparent"
-                    android:gravity="center_vertical" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_male"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="男" />
+
+                    <RadioButton
+                        android:id="@+id/rb_female"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="女" />
+
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout
@@ -122,7 +157,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
-                    android:hint="(0:用户注册，1：修补工2：团队)" />
+                    android:hint="填写对应数字(默认0:用户注册，1：修补工2：团队)"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -172,7 +208,10 @@
                     android:id="@+id/editText6"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"
+                    android:hint="与发送验证码手机号保持一致"
+                    android:editable="false"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -197,7 +236,10 @@
                     android:id="@+id/editText7"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"
+                    android:editable="false"
+                    android:text="身份证"
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -424,6 +466,12 @@
 
             </LinearLayout>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:hint="* 没注明'必填'选项为选填 *"
+                android:textSize="12sp" />
         </LinearLayout>
     </ScrollView>
 

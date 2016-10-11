@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#f7f7f7"
+    android:background="#eeeeee"
     android:orientation="vertical">
 
     <com.stephen.furniturerepair.common.view.TitleBar.TitleBar
@@ -17,7 +17,184 @@
         android:layout_height="0.5dp"
         android:background="#eeeeee" />
 
+    <RelativeLayout
+        android:id="@+id/rl_myinfo_photo"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:background="#fff">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="个人头像"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/into_" />
+
+        <ImageView
+            android:id="@+id/iv_myinfo_photo"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@mipmap/my1_"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/iv1"
+            />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_myinfo_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="0.5dp"
+        android:background="#fff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="昵称"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/into_" />
+
+        <TextView
+            android:id="@+id/tv_myinfo_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv2"
+            android:gravity="right"
+            android:text=""
+            android:layout_centerVertical="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_myinfo_sex"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="0.5dp"
+        android:background="#fff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="性别"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/into_" />
+
+        <TextView
+            android:id="@+id/tv_myinfo_sex"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv3"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_myinfo_phone"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="0.5dp"
+        android:background="#fff">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="电话"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/into_" />
+
+        <TextView
+            android:id="@+id/tv_myinfo_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv4"
+            android:gravity="right"
+            android:layout_centerVertical="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_myinfo_address"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:layout_marginTop="0.5dp"
+        android:background="#fff">
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="地址"
+            android:layout_marginRight="8dp"
+            android:textSize="14sp" />
+
+        <ImageView
+            android:id="@+id/iv5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="5dp"
+            android:background="@mipmap/into_" />
+
+        <TextView
+            android:id="@+id/tv_myinfo_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/iv5"
+            android:gravity="right"
+            android:singleLine="true"
+            android:layout_toRightOf="@id/tv_address"
+            android:layout_centerVertical="true"
+            android:textSize="14sp" />
+    </RelativeLayout>
     <TextView
         android:id="@+id/textView"
         android:layout_width="match_parent"
@@ -25,17 +202,15 @@
         android:layout_weight="99"
         android:gravity="center"
         android:text="个人信息"
+        android:visibility="gone"
         android:textSize="20sp" />
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
 
     <LinearLayout
         android:id="@+id/linearLayout_loginOut"
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="30dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
@@ -47,7 +222,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:text="退出"
+            android:text="修改密码"
             android:textColor="#ffffffff"
             android:textSize="20sp" />
 

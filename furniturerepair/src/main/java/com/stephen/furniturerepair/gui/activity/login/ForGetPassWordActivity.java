@@ -1,6 +1,5 @@
 package com.stephen.furniturerepair.gui.activity.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -12,8 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
+import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
@@ -24,6 +23,8 @@ import com.stephen.furniturerepair.common.utils.Validator;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
 
 import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,8 +37,10 @@ import butterknife.ButterKnife;
 /**
  * Created by Stephen on 2016/5/12 0012.
  * Emial: 895745843@qq.com
+ *
+ *  重置密码-忘记密码
  */
-public class ForGetPassWordActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft, TextWatcher, View.OnClickListener {
+public class ForgetPasswordActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft, TextWatcher, View.OnClickListener {
     public static final String TAG = "ForGetPassWordActivity";
     @Bind(R.id.editText)
     EditText editText;
@@ -51,8 +54,6 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
     TextView textViewSendVerifyRequest;
     @Bind(R.id.titleBar)
     TitleBar titleBar;
-    @Bind(R.id.editText6)
-    EditText editText6;
 
     @Override
     protected int setView() {
@@ -88,6 +89,7 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
                     registPhoneNumber = editText.getText().toString();
                     startToTiming();
                     if (DataUtils.dealToastMsgWithRightAndWrong(paramObject)) {
+
                     }
                 }
 
@@ -112,7 +114,7 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
         boolean b = phoneNumber.startsWith("1");
         int length = phoneNumber.length();
         if (b && length == 11) {
-            // TODO: 2016/4/30 重置发送验证码按钮 倒计时
+            //重置发送验证码按钮 倒计时
             resetVerificationStatus();
         }
     }
@@ -125,15 +127,17 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //发送验证码
             case R.id.textView_sendVerify_Request:
                 String s = editText.getText().toString();
                 if (TextUtils.isEmpty(s) || !Validator.isMobile(s)) {
-                    Toast.makeText(ForGetPassWordActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 LogUtils.E("---------------请求发送验证码");
                 sendRequest(editText.getText().toString());
                 break;
+            //确认重置密码
             case R.id.register_next:
                 String ss = editText.getText().toString();
                 String s2 = editText2.getText().toString();
@@ -141,18 +145,16 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
                 if (TextUtils.isEmpty(ss)) {
                     Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
                 } else if (!Validator.isMobile(ss)) {
-                    Toast.makeText(ForGetPassWordActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ForgetPasswordActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
                 } else if (TextUtils.isEmpty(s2)) {
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                } /*else if (!Validator.isPassword(s3)) {
-                    Toast.makeText(ForGetPassWordActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
-                }  else if (TextUtils.isEmpty(registPhoneNumber)) {
-                    Toast.makeText(this, "注册前，请获取验证码", Toast.LENGTH_SHORT).show();
-                } else if (!ss.equals(registPhoneNumber)) {
+                } else if (!Validator.isPassword(s3)) {
+                    Toast.makeText(ForgetPasswordActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
+                }  else if (!ss.equals(registPhoneNumber)) {
                     Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
-                }*/ else {
-                    // TODO: 2016/5/12 0012 重置密码
-                    resetPassWord(registPhoneNumber, s2, editText6.getText().toString(), s3);
+                } else {
+                    // 重置密码
+                    resetPassWord(registPhoneNumber, s2, s3);
                 }
                 break;
         }
@@ -201,33 +203,39 @@ public class ForGetPassWordActivity extends BaseActivity implements TitleBarList
     }
 
     /**
-     * 参数：
-     * account=账号，
-     * mobile=手机号
-     * captcha=码证码
-     *
      * @param phoneNumber
      * @param verifyCode
      * @param password
      */
-    private void resetPassWord(String phoneNumber, String verifyCode, String account, String password) {
+    private void resetPassWord(String phoneNumber, String verifyCode, String password) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
         list.add(new BasicNameValuePair("mobile", phoneNumber));
         list.add(new BasicNameValuePair("captcha", verifyCode));
-        list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("password", password));
 //        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
 //        list.add(new BasicNameValuePair("userId", SPUtils.getInstance(ForGetPassWordActivity.this).getUserId()));
         try {
             getDataFromServer(list, URL.URL_FORGET_PASSWORD, new GlobalCallBack() {
                 @Override
-                public void processData(String paramObject) {
-                    if (DataUtils.dealResultSeccess(paramObject)) {
-//                        Toast.makeText(ForGetPassWordActivity.this, "修改成功", Toast.LENGTH_SHORT).show();
-                        finish();
-                        startActivity(new Intent(ForGetPassWordActivity.this, MainActivity.class));
-                    } else {
-                        Toast.makeText(ForGetPassWordActivity.this, "修改失败", Toast.LENGTH_SHORT).show();
+                public void processData(String json) {
+                    try {
+                        JSONObject jsonObject = new JSONObject(json);
+                        int code = jsonObject.getInt("code");
+                        String msg = jsonObject.getString("message");
+                        if (code == 100) {
+                            if (!TextUtils.isEmpty(msg)) {
+                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
+//                                startActivity(new Intent(ForGetPassWordActivity.this, LoginActivity.class));
+                                finish();
+                            }
+                        } else {
+                            if (!TextUtils.isEmpty(msg)) {
+                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } catch (JSONException e) {
+                        LogUtils.E(json);
+                        e.printStackTrace();
                     }
                 }
 

@@ -1,19 +1,12 @@
 package com.stephen.furniturerepair.gui.activity;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.PersistableBundle;
-import android.support.v4.app.Fragment;
 
 import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.TitleBarListener;
-import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
-import com.stephen.furniturerepair.gui.activity.one.OneFragment;
-import com.stephen.furniturerepair.gui.activity.two.TwoFragment;
-
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -21,6 +14,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Stephen on 09/16/2016.
  * Emial: 895745843@qq.com
+ *
+ *  发单
  */
 public class IssuanceActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft {
 
@@ -36,7 +31,7 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
-        titleBar.setTitlBartitle("发单");
+        titleBar.setTitlBartitle("发布信息");
         titleBar.setTitlBarLeftImageButtonResuource(R.mipmap.icon_back, this);
 
 //        Fragment fragmentByTag = getSupportFragmentManager().findFragmentByTag("one");

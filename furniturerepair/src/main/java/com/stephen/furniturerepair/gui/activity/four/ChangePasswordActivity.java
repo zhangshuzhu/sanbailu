@@ -1,7 +1,5 @@
 package com.stephen.furniturerepair.gui.activity.four;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -16,7 +14,6 @@ import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.interfaces.TitleBarListener;
 import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
-import com.stephen.furniturerepair.gui.activity.login.LoginActivity;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -64,17 +61,11 @@ public class ChangePasswordActivity extends BaseActivity implements TitleBarList
         finish();
     }
 
-    @OnClick({R.id.editText1, R.id.editText2, R.id.editText3, R.id.linearLayout_loginOut})
+    @OnClick({R.id.linearLayout_loginOut})
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.editText1:
-                break;
-            case R.id.editText2:
-                break;
-            case R.id.editText3:
-                break;
+//            确定修改密码
             case R.id.linearLayout_loginOut:
-
                 sendRequest(editText1.getText().toString(), editText2.getText().toString(), editText3.getText().toString());
                 break;
         }
@@ -82,13 +73,13 @@ public class ChangePasswordActivity extends BaseActivity implements TitleBarList
 
     /**
      * 修改密码
-     *
      */
     private void sendRequest(final String account, final String old_password, final String new_password) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
         list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("old_password", old_password));
         list.add(new BasicNameValuePair("new_password", new_password));
+        list.add(new BasicNameValuePair("id", SPUtils.getInstance(this).getUserId()));
         try {
             getDataFromServer(list, URL.URL_UPDATE_PASSWORD, new GlobalCallBack() {
                 @Override
@@ -97,20 +88,16 @@ public class ChangePasswordActivity extends BaseActivity implements TitleBarList
                         try {
                             JSONObject jsonObject = new JSONObject(paramObject);
                             int code = jsonObject.getInt("code");
+                            String message = jsonObject.getString("message");
+                            if (!TextUtils.isEmpty(message))
+                                Toast.makeText(ChangePasswordActivity.this, message, Toast.LENGTH_SHORT).show();
                             if (code == 100) {
-//                                Toast.makeText(LoginActivity.this, "登录成功！", Toast.LENGTH_SHORT).show();
-//                                SPUtils.getInstance(LoginActivity.this).setLoginState(true);
-//                                SPUtils.getInstance(LoginActivity.this).setUserName(phoneNumber);
-//                                SPUtils.getInstance(LoginActivity.this).setPasswod(password);
-//                                startActivity(new Intent(LoginActivity.this, EntranceActivity.class));
-                                setResult(Activity.RESULT_OK, new Intent());
                                 finish();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
-//                        dealResult(paramObject);
                     }
                 }
 
