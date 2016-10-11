@@ -162,11 +162,6 @@ public class RegistInfoActivity extends BaseActivity {
 
     private void goRegist(String name, String account) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-//        list.add(new BasicNameValuePair("phoneNum", phoneNumber));
-//        list.add(new BasicNameValuePair("verifyCode", verification));
-//        list.add(new BasicNameValuePair("password", passWord));
-
-
         list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("password", passWord));
         list.add(new BasicNameValuePair("name", name));

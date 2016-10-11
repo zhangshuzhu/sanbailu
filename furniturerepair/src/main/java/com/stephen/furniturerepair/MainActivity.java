@@ -77,6 +77,26 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         initTabHost();
     }
 
+    @Override
+    protected void onResume() {
+        LogUtils.E("TAG", "-------------onResume()  showIndex:" + showIndex);
+        LogUtils.E("TAG", "-------------onResume()  currentIndex:" + currentIndex);
+        if (showIndex == 0) {
+            radioGroup1.check(R.id.radio0);
+            tabhost.setCurrentTabByTag("0");
+            currentIndex = 0;
+        } else if (showIndex == 1) {
+            radioGroup1.check(R.id.radio1);
+            tabhost.setCurrentTabByTag("1");
+            currentIndex = 1;
+        } else {
+            radioGroup1.check(R.id.radio0);
+            tabhost.setCurrentTabByTag("0");
+            currentIndex = 0;
+        }
+        super.onResume();
+    }
+
     private void initTabHost() {
         // 设置TabHost R.id.realtabcontent 为显示Fragment的容器
         tabhost.setup(this, getSupportFragmentManager(), R.id.realtabcontent);
@@ -112,24 +132,29 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
     private static final int CODE_MINE = 0x6;
 
     private int currentIndex;
-    private int showIndex;
+    public static int showIndex;
 
     @Override
     public void onCheckedChanged(RadioGroup group, int checkedId) {
 
         switch (checkedId) {
-            case R.id.radio0:LogUtils.E("TAG", "-------------onCheckedChanged()  0");
+//            首页
+            case R.id.radio0:
+                LogUtils.E("TAG", "-------------onCheckedChanged()  0");
                 tabhost.setCurrentTabByTag("0");
                 currentIndex = 0;
                 showIndex = 0;
                 break;
-            case R.id.radio1:LogUtils.E("TAG", "-------------onCheckedChanged()  1");
+//            联盟
+            case R.id.radio1:
+                LogUtils.E("TAG", "-------------onCheckedChanged()  1");
                 tabhost.setCurrentTabByTag("1");
                 currentIndex = 1;
                 showIndex = 1;
                 break;
 //            发单
-            case R.id.radio2:LogUtils.E("TAG", "-------------onCheckedChanged()  2");
+            case R.id.radio2:
+                LogUtils.E("TAG", "-------------onCheckedChanged()  2");
 
                 if (currentIndex == 2) {
                     return;
@@ -142,7 +167,9 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
                 }
                 currentIndex = 2;
                 break;
-            case R.id.radio3:LogUtils.E("TAG", "-------------onCheckedChanged()  3");
+//            我的
+            case R.id.radio3:
+                LogUtils.E("TAG", "-------------onCheckedChanged()  3");
 //                tabhost.setCurrentTabByTag("3");
 
                 if (currentIndex == 3) {
@@ -245,23 +272,5 @@ public class MainActivity extends BaseActivity implements RadioGroup.OnCheckedCh
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
-    protected void onResume() {
-        LogUtils.E("TAG", "-------------onResume()  showIndex:" + showIndex);
-        LogUtils.E("TAG", "-------------onResume()  currentIndex:" + currentIndex);
-        if (showIndex == 0) {
-            radioGroup1.check(R.id.radio0);
-            tabhost.setCurrentTabByTag("0");
-            currentIndex = 0;
-        } else if (showIndex == 1) {
-            radioGroup1.check(R.id.radio1);
-            tabhost.setCurrentTabByTag("1");
-            currentIndex = 1;
-        } else {
-            radioGroup1.check(R.id.radio0);
-            tabhost.setCurrentTabByTag("0");
-            currentIndex = 0;
-        }
-        super.onResume();
-    }
+
 }

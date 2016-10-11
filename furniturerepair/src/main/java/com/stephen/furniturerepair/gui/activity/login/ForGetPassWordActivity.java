@@ -37,8 +37,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Stephen on 2016/5/12 0012.
  * Emial: 895745843@qq.com
- *
- *  重置密码-忘记密码
+ * <p/>
+ * 重置密码-忘记密码
  */
 public class ForgetPasswordActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft, TextWatcher, View.OnClickListener {
     public static final String TAG = "ForGetPassWordActivity";
@@ -150,7 +150,7 @@ public class ForgetPasswordActivity extends BaseActivity implements TitleBarList
                     Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
                 } else if (!Validator.isPassword(s3)) {
                     Toast.makeText(ForgetPasswordActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
-                }  else if (!ss.equals(registPhoneNumber)) {
+                } else if (!ss.equals(registPhoneNumber)) {
                     Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
                 } else {
                     // 重置密码
@@ -222,16 +222,11 @@ public class ForgetPasswordActivity extends BaseActivity implements TitleBarList
                         JSONObject jsonObject = new JSONObject(json);
                         int code = jsonObject.getInt("code");
                         String msg = jsonObject.getString("message");
+                        if (!TextUtils.isEmpty(msg)) {
+                            Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
+                        }
                         if (code == 100) {
-                            if (!TextUtils.isEmpty(msg)) {
-                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
-//                                startActivity(new Intent(ForGetPassWordActivity.this, LoginActivity.class));
-                                finish();
-                            }
-                        } else {
-                            if (!TextUtils.isEmpty(msg)) {
-                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
-                            }
+                            finish();
                         }
                     } catch (JSONException e) {
                         LogUtils.E(json);

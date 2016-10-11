@@ -1,17 +1,33 @@
 package com.stephen.furniturerepair.gui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
+import com.stephen.furniturerepair.app.App;
+import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
+import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.interfaces.TitleBarListener;
+import com.stephen.furniturerepair.common.utils.LogUtils;
+import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
+
+import org.apache.http.message.BasicNameValuePair;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -113,7 +129,6 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
         switch (view.getId()) {
 //            修补类型
             case R.id.ll_suance_type:
-                // TODO: 2016/10/11
                 break;
 //            上传近照
             case R.id.ll_neer_upload:
@@ -129,7 +144,72 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
                 break;
 //            发布
             case R.id.ll_suance_release:
+                String discr = etSuanceDesc.getText().toString().trim();
+                String name = etSuanceName.getText().toString().trim();
+                String phone = etSuancePhone.getText().toString().trim();
+                String address = etSuanceAddress.getText().toString().trim();
+                if (TextUtils.isEmpty(discr)) {
+                    Toast.makeText(IssuanceActivity.this, "请填写客户需求信息", Toast.LENGTH_SHORT).show();
+                } else {
+                    publishInfo(discr, name, phone, address);
+                }
                 break;
+        }
+    }
+
+    private void publishInfo(String descr, String name, String phone, String address) {
+        List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
+//        list.add(new BasicNameValuePair("account", account));
+//        list.add(new BasicNameValuePair("title", passWord));
+        list.add(new BasicNameValuePair("repair_type", tvSuanceType.getText().toString()));
+//        list.add(new BasicNameValuePair("recent_phone", ));//二进制流  base64字符串
+//        list.add(new BasicNameValuePair("far_phone", ));
+//        list.add(new BasicNameValuePair("recent_name", ));//上传近照文件名称（在相册里读出的文件名）
+//        list.add(new BasicNameValuePair("far_name", ));//上传远照名称
+        list.add(new BasicNameValuePair("contact_address", address));//"北京市海淀区西北旺东路10号院百度科技园1号楼"
+        list.add(new BasicNameValuePair("contact_number", phone));
+        list.add(new BasicNameValuePair("contact_man", name));
+        list.add(new BasicNameValuePair("color", tvSuanceColor.getText().toString()));
+        list.add(new BasicNameValuePair("customer_demand", descr));
+        list.add(new BasicNameValuePair("repair_time", tvSuanceDate.getText().toString()));
+        String userId = SPUtils.getInstance(IssuanceActivity.this).getUserId();
+        list.add(new BasicNameValuePair("id", userId));
+//        list.add(new BasicNameValuePair("coupon", ));//卷号（默认生成8位卷号）
+//        list.add(new BasicNameValuePair("status",));//订单状态(0:订单已发布，1：订单已购买，2：订单已支付，9:订单已取消)
+
+        try {
+            getDataFromServer(list, URL.URL_PUBLISH, new GlobalCallBack() {
+                @Override
+                public void processData(String paramObject) {
+                    if (TextUtils.isEmpty(paramObject)) {
+                        Toast.makeText(IssuanceActivity.this, "error!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        try {
+                            JSONObject jsonObject = new JSONObject(paramObject);
+                            int code = jsonObject.getInt("code");
+                            String msg = jsonObject.getString("message");
+                            if (!TextUtils.isEmpty(msg)) {
+                                Toast.makeText(App.getContext(), msg, Toast.LENGTH_SHORT).show();
+                            }
+                            if (code == 100) {
+                                MainActivity.showIndex = 0;
+                                startActivity(new Intent(IssuanceActivity.this, MainActivity.class));
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            LogUtils.E(paramObject);
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+                @Override
+                public void responseError(String string) {
+
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

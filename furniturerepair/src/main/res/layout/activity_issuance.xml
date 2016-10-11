@@ -61,7 +61,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:text="xx" />
+                        android:text="木门木饰面" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -83,14 +83,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/iv_shop_neer_image"
                     android:layout_width="163dp"
                     android:layout_height="163dp"
-                    android:layout_marginRight="15dp"
+                    android:layout_marginRight="12dp"
                     android:scaleType="centerCrop"
                     android:src="@mipmap/give_typical_examples" />
 
@@ -120,8 +120,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:visibility="visible"
-                android:layout_marginTop="15dp">
+                android:layout_marginTop="15dp"
+                android:visibility="visible">
 
                 <ImageView
                     android:id="@+id/iv_shop_far_image"
@@ -144,6 +144,7 @@
                         android:src="@mipmap/upload" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -172,7 +173,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:text="xx" />
+                        android:text="红色" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -181,6 +182,7 @@
                         android:src="@mipmap/down" />
                 </LinearLayout>
             </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
@@ -207,15 +209,15 @@
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:background="@null"
-                        android:textSize="12sp"
-                        android:hint="请描述详细信息"
                         android:layout_weight="1"
-                        />
+                        android:background="@null"
+                        android:hint="请描述详细信息"
+                        android:textSize="12sp" />
 
                 </LinearLayout>
             </LinearLayout>
-             <LinearLayout
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
                 android:layout_marginLeft="12dp"
@@ -243,7 +245,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:text="xx" />
+                        android:text="2016-12-09" />
 
                     <ImageView
                         android:layout_width="wrap_content"
@@ -252,120 +254,125 @@
                         android:src="@mipmap/down" />
                 </LinearLayout>
             </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:layout_marginTop="30dp"
-            android:text="联系方式"
-            android:textColor="@color/app_theme_red"
-            android:textSize="16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/ce1e1e1" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="联系人员:"
-                android:textSize="14sp" />
+                android:layout_marginTop="30dp"
+                android:padding="10dp"
+                android:text="联系方式"
+                android:textColor="@color/app_theme_red"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/ce1e1e1" />
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/bg_rectangle_stroke_black"
+                android:layout_height="30dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical">
-                <EditText
-                    android:id="@+id/et_suance_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:textSize="12sp"
-                    android:hint="请填写联系人姓名"
-                    android:layout_weight="1"
-                    />
-            </LinearLayout>
-            </LinearLayout>
-             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="联系电话:"
-                android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系人员:"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/bg_rectangle_stroke_black"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/et_suance_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请填写联系人姓名"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/bg_rectangle_stroke_black"
+                android:layout_height="30dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical">
-                <EditText
-                    android:id="@+id/et_suance_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:textSize="12sp"
-                    android:hint="请填写联系电话"
-                    android:layout_weight="1"
-                    />
-            </LinearLayout>
-            </LinearLayout>
-             <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="30dp"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="客户地址:"
-                android:textSize="14sp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="联系电话:"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/bg_rectangle_stroke_black"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/et_suance_phone"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请填写联系电话"
+                        android:textSize="12sp" />
+                </LinearLayout>
+            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="30dp"
-                android:background="@drawable/bg_rectangle_stroke_black"
+                android:layout_height="30dp"
+                android:layout_marginLeft="12dp"
+                android:layout_marginRight="12dp"
+                android:layout_marginTop="20dp"
                 android:gravity="center_vertical">
-                <EditText
-                    android:id="@+id/et_suance_address"
+
+                <TextView
                     android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="客户地址:"
+                    android:textSize="14sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:background="@null"
-                    android:textSize="12sp"
-                    android:hint="请填写详细地址"
-                    android:layout_weight="1"
-                    />
+                    android:layout_marginLeft="30dp"
+                    android:background="@drawable/bg_rectangle_stroke_black"
+                    android:gravity="center_vertical">
+
+                    <EditText
+                        android:id="@+id/et_suance_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="请填写详细地址"
+                        android:textSize="12sp" />
+                </LinearLayout>
             </LinearLayout>
-            </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/ll_suance_release"
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:layout_marginBottom="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="30dp"
@@ -378,7 +385,6 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="发布"
-                    android:layout_marginBottom="20dp"
                     android:textColor="#ffffffff"
                     android:textSize="20sp" />
 
