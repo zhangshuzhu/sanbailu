@@ -6,8 +6,10 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
@@ -120,7 +122,7 @@ public abstract class BaseActivity extends FragmentActivity{
             public void onFailure(Request request, IOException e) {
                 Message msg = Message.obtain();
                 msg.what = Constant.Failure;
-                LogUtils.E( "返回数据 " + "错误！");
+                LogUtils.E("返回数据 " + "错误！");
                 handler.sendMessage(msg);
             }
 
@@ -129,7 +131,7 @@ public abstract class BaseActivity extends FragmentActivity{
                 Message msg = Message.obtain();
                 msg.what = Constant.SUCCESS;
                 msg.obj = response.body().string();
-                LogUtils.E( "返回数据 " + msg.obj);
+                LogUtils.E("返回数据 " + msg.obj);
                 handler.sendMessage(msg);
 
             }
@@ -149,7 +151,17 @@ public abstract class BaseActivity extends FragmentActivity{
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
     }
 
-
+    /**
+     * 点击空白位置 隐藏软键盘
+     * 在activity中重写onTouchEvent方法
+     */
+    public boolean onTouchEvent(MotionEvent event) {
+        if (null != this.getCurrentFocus()) {
+            InputMethodManager mInputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            return mInputMethodManager.hideSoftInputFromWindow(this.getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.onTouchEvent(event);
+    }
     public void showProgressDialog() {
         if (dialog_buffer == null) {
             String string = SApplication.getInstance().getAppContext().getString(R.string.app_name);
