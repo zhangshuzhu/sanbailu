@@ -73,6 +73,8 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
     EditText etSuanceAddress;
     @Bind(R.id.ll_suance_release)
     LinearLayout llSuanceRelease;
+    @Bind(R.id.et_suance_title)
+    EditText etSuanceTitle;
 
     @Override
     protected int setView() {
@@ -148,19 +150,39 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
                 String name = etSuanceName.getText().toString().trim();
                 String phone = etSuancePhone.getText().toString().trim();
                 String address = etSuanceAddress.getText().toString().trim();
+                String title = etSuanceTitle.getText().toString().trim();
+
+                if (TextUtils.isEmpty(title)) {
+                    Toast.makeText(IssuanceActivity.this, "请输入发布标题", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 if (TextUtils.isEmpty(discr)) {
                     Toast.makeText(IssuanceActivity.this, "请填写客户需求信息", Toast.LENGTH_SHORT).show();
-                } else {
-                    publishInfo(discr, name, phone, address);
+                    return;
                 }
+                if (TextUtils.isEmpty(name)) {
+                    Toast.makeText(IssuanceActivity.this, "请填写联系人姓名", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(phone)) {
+                    Toast.makeText(IssuanceActivity.this, "请填写联系人电话", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (TextUtils.isEmpty(address)) {
+                    Toast.makeText(IssuanceActivity.this, "请填写联系人地址", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                publishInfo(discr, name, phone, address, title);
+
                 break;
         }
     }
 
-    private void publishInfo(String descr, String name, String phone, String address) {
+    private void publishInfo(String descr, String name, String phone, String address, String title) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
 //        list.add(new BasicNameValuePair("account", account));
-//        list.add(new BasicNameValuePair("title", passWord));
+        list.add(new BasicNameValuePair("title", title));
         list.add(new BasicNameValuePair("repair_type", tvSuanceType.getText().toString()));
 //        list.add(new BasicNameValuePair("recent_phone", ));//二进制流  base64字符串
 //        list.add(new BasicNameValuePair("far_phone", ));

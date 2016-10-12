@@ -34,6 +34,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginLeft="10dp"
             android:layout_weight="1"
+            android:textSize="14sp"
             android:background="@color/transparent"
             android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM_012234566789"
             android:inputType="text"
@@ -65,6 +66,7 @@
             android:background="@color/transparent"
             android:digits="qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789"
             android:ems="10"
+            android:textSize="14sp"
             android:inputType="textPassword"
             android:maxLength="16" />
     </LinearLayout>

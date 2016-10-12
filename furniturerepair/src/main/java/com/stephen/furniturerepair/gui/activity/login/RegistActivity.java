@@ -3,13 +3,13 @@ package com.stephen.furniturerepair.gui.activity.login;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.URL;
@@ -18,7 +18,6 @@ import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
 import com.stephen.furniturerepair.common.interfaces.TitleBarListener;
 import com.stephen.furniturerepair.common.utils.DataUtils;
 import com.stephen.furniturerepair.common.utils.LogUtils;
-import com.stephen.furniturerepair.common.utils.Validator;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -48,21 +47,54 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
     TextView textViewSendVerifyRequest;
     @Bind(R.id.titleBar)
     TitleBar titleBar;
+    @Bind(R.id.rb_register_user)
+    RadioButton rbRegisterUser;
+    @Bind(R.id.rb_register_master)
+    RadioButton rbRegisterMaster;
+    @Bind(R.id.rb_register_team)
+    RadioButton rbRegisterTeam;
+    @Bind(R.id.rg_register_type)
+    RadioGroup rgRegisterType;
 
     private Timer timer;
     private int second = 60;
 
     private String registPhoneNumber;
+    private int type;
+    private String phoneNum;
+    private String verification;
+    private String password;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ButterKnife.bind(this);
         setTitle("注册");
-        titleBar.setTitlBarLeftImageButtonResuource(R.mipmap.icon_back,this);
+        titleBar.setTitlBarLeftImageButtonResuource(R.mipmap.icon_back, this);
         editText.addTextChangedListener(this);
         textViewSendVerifyRequest.setOnClickListener(this);
         regiterNext.setOnClickListener(this);
+        initListener();
+    }
+
+    private void initListener() {
+        rgRegisterType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                switch (i) {
+                    case R.id.rb_register_user:
+                        type = 0;
+                        break;
+                    case R.id.rb_register_master:
+                        type = 1;
+                        break;
+                    case R.id.rb_register_team:
+                        type = 2;
+                        break;
+
+                }
+            }
+        });
     }
 
     @Override
@@ -116,43 +148,43 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.textView_sendVerify_Request:
-                String s = editText.getText().toString();
-                if (TextUtils.isEmpty(s) || !Validator.isMobile(s)) {
-                    Toast.makeText(RegistActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+//                String s = editText.getText().toString();
+//                if (TextUtils.isEmpty(s) || !Validator.isMobile(s)) {
+//                    Toast.makeText(RegistActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
+//                    return;
+//                }
                 LogUtils.E("---------------请求发送验证码");
                 sendRequest(editText.getText().toString());
                 break;
 //            下一步填写注册信息
             case R.id.register_next:
-                String ss = editText.getText().toString();
-                String s2 = editText2.getText().toString();
-                String s3 = editText3.getText().toString();
-                if (TextUtils.isEmpty(ss)) {
-                    Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
-                }else if (!Validator.isMobile(ss)) {
-                    Toast.makeText(RegistActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(s2)) {
-                    Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
-                } else if (!Validator.isPassword(s3)) {
-                    Toast.makeText(RegistActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
-                } else if (TextUtils.isEmpty(registPhoneNumber)) {
-                    Toast.makeText(this, "注册前，请获取验证码", Toast.LENGTH_SHORT).show();
-                } else if(!ss.equals(registPhoneNumber)){
-                    Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
-                } else {
-                    sendReques2t(ss,s2,s3);
-                }
+                phoneNum = editText.getText().toString();
+                verification = editText2.getText().toString();
+                password = editText3.getText().toString();
+//                if (TextUtils.isEmpty(phoneNum)) {
+//                    Toast.makeText(this, "手机号不能为空", Toast.LENGTH_SHORT).show();
+//                }else if (!Validator.isMobile(phoneNum)) {
+//                    Toast.makeText(RegistActivity.this, "请输入有效的手机号码", Toast.LENGTH_SHORT).show();
+//                } else if (TextUtils.isEmpty()) {
+//                    Toast.makeText(this, "请输入验证码", Toast.LENGTH_SHORT).show();
+//                } else if (!Validator.isPassword(password)) {
+//                    Toast.makeText(RegistActivity.this, "请输入6-16位密码", Toast.LENGTH_SHORT).show();
+//                } else if (TextUtils.isEmpty(registPhoneNumber)) {
+//                    Toast.makeText(this, "注册前，请获取验证码", Toast.LENGTH_SHORT).show();
+//                } else if(!phoneNum.equals(registPhoneNumber)){
+//                    Toast.makeText(this, "当前手机号和获取验证码手机号不一致", Toast.LENGTH_SHORT).show();
+//                } else {
+                sendReques2t();
+//                }
                 break;
         }
     }
 
-    private void openStartRegisterInfoActivity(String ss, String s2, String s3) {
-        Intent intent = new Intent(RegistActivity.this, RegistInfoActivity.class);
-        intent.putExtra("phoneNumber", ss);
-        intent.putExtra("verification", s2);
-        intent.putExtra("password", s3);
+    private void userRegisterInfoActivity() {
+        Intent intent = new Intent(RegistActivity.this, UserRegistInfoActivity.class);
+        intent.putExtra("phoneNumber", phoneNum);
+        intent.putExtra("verification", verification);
+        intent.putExtra("password", password);
         startActivity(intent);
         finish();
     }
@@ -200,16 +232,31 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
     }
 
 
-    private void sendReques2t(final String phoneNumber, final String verification, final String s3) {
+    private void sendReques2t() {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
-        list.add(new BasicNameValuePair("mobile", phoneNumber));
+        list.add(new BasicNameValuePair("mobile", phoneNum));
         list.add(new BasicNameValuePair("captcha", verification));
         try {
             getDataFromServer(list, URL.URL_CHECK_SMS, new GlobalCallBack() {
                 @Override
                 public void processData(String paramObject) {
                     if (!DataUtils.dealResultFail(paramObject, 100)) {//正确
-                        openStartRegisterInfoActivity(phoneNumber, verification, s3);
+                        switch (type) {
+//                            用户
+                            case 0:
+                                userRegisterInfoActivity();
+                                break;
+//                            修补工
+                            case 1:
+                                masterRegisterInfoActivity(type);
+                                break;
+//                            团队
+                            case 2:
+                                masterRegisterInfoActivity(type);
+                                break;
+
+                        }
+
                     }
                 }
 
@@ -221,5 +268,14 @@ public class RegistActivity extends BaseActivity implements TextWatcher, View.On
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    private void masterRegisterInfoActivity(int tag) {
+        Intent intent = new Intent(RegistActivity.this, RegistInfoActivity.class);
+        intent.putExtra("phoneNumber", phoneNum);
+        intent.putExtra("type",tag );
+        intent.putExtra("password", password);
+        startActivity(intent);
+        finish();
     }
 }

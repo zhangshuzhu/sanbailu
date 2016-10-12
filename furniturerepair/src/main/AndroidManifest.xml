@@ -43,6 +43,7 @@
         <activity android:name=".gui.activity.login.RegistActivity" />
         <activity android:name=".gui.activity.login.LoginActivity" android:launchMode="singleTop" />
         <activity android:name=".gui.activity.login.RegistInfoActivity" />
+        <activity android:name=".gui.activity.login.UserRegistInfoActivity" />
         <activity android:name=".gui.activity.login.ForgetPasswordActivity" />
 
         <!--发单接单入口-->
@@ -60,7 +61,8 @@
             android:process=":remote" />
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="IRR0lQI7INPqWcaIUxlS8p2zQ7WBY5Uo" />
+            android:value="7fO5KGYl0RQ9s8BotsiWwyNj145VdmG5" />
+            <!--android:value="IRR0lQI7INPqWcaIUxlS8p2zQ7WBY5Uo" />-->
 
     </application>
 

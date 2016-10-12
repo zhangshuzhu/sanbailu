@@ -20,7 +20,7 @@ public class Validator {
     public static final String REGEX_PASSWORD = "^[a-zA-Z0-9]{6,16}$";
  
     /**
-     * 正则表达式：验证手机号
+     * 正则表达式：验证手机号（过时）
      */
     public static final String REGEX_MOBILE = "^((13[0-9])|(15[^4,\\D])|(18[0,5-9]))\\d{8}$";
  

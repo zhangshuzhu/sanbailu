@@ -6,22 +6,17 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.stephen.furniturerepair.MainActivity;
 import com.stephen.furniturerepair.R;
 import com.stephen.furniturerepair.app.App;
 import com.stephen.furniturerepair.app.URL;
 import com.stephen.furniturerepair.common.base.BaseActivity;
 import com.stephen.furniturerepair.common.interfaces.GlobalCallBack;
-import com.stephen.furniturerepair.common.utils.DataUtils;
-import com.stephen.furniturerepair.common.utils.GsonUtils;
 import com.stephen.furniturerepair.common.utils.LogUtils;
-import com.stephen.furniturerepair.common.utils.SPUtils;
 import com.stephen.furniturerepair.common.view.TitleBar.TitleBar;
-import com.stephen.furniturerepair.gui.beans.UserInfoBean;
 
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONException;
@@ -36,8 +31,8 @@ import butterknife.ButterKnife;
 /**
  * Created by Stephen on 2016/4/3 0003.
  * Emial: 895745843@qq.com
- *
- * 补充注册信息
+ * <p/>
+ * 修补工、团队注册信息
  */
 public class RegistInfoActivity extends BaseActivity {
     @Bind(R.id.titleBar)
@@ -46,8 +41,6 @@ public class RegistInfoActivity extends BaseActivity {
     EditText editText;
     @Bind(R.id.editText2)
     EditText editText2;
-    @Bind(R.id.editText4)
-    EditText editText4;
     @Bind(R.id.editText5)
     EditText editText5;
     @Bind(R.id.register_next)
@@ -68,19 +61,18 @@ public class RegistInfoActivity extends BaseActivity {
     EditText editText12;
     @Bind(R.id.editText13)
     EditText editText13;
-    @Bind(R.id.editText14)
-    EditText editText14;
-    @Bind(R.id.editText15)
-    EditText editText15;
     @Bind(R.id.rg_sex)
     RadioGroup rgSex;
+    @Bind(R.id.rb_male)
+    RadioButton rbMale;
+    @Bind(R.id.rb_female)
+    RadioButton rbFemale;
+    @Bind(R.id.ll_register_sex)
+    LinearLayout llRegisterSex;
     private String phoneNumber;
-    private String verification;
     private String passWord;
-    //    private com.bigkoo.pickerview.OptionsPopupWindow pwOptions;
-    private boolean isClickCity = true;
     private String sex = "男";
-    private String type = "0";
+    private int type;
 
     @Override
     protected int setView() {
@@ -94,25 +86,15 @@ public class RegistInfoActivity extends BaseActivity {
         setTitle("注册信息");
         Intent intent = getIntent();
         phoneNumber = intent.getStringExtra("phoneNumber");
-        verification = intent.getStringExtra("verification");
         passWord = intent.getStringExtra("password");
+        type = intent.getIntExtra("type", 0);
+        if (type == 1) {
+            llRegisterSex.setVisibility(View.VISIBLE);
+        }else {
+            llRegisterSex.setVisibility(View.GONE);
+        }
         editText6.setText(phoneNumber);
         initListener();
-
-
-//        initCityData();
-//        editText3.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (isClickCity) {
-//                    SoftKeyBoardUtils.hideSoftKeyBoard(RegistInfoActivity.this);
-//                    showCityOpton(v, "hometown");
-//                    isClickCity = false;
-//                } else {
-//                    isClickCity = true;
-//                }
-//            }
-//        });
     }
 
     private void initListener() {
@@ -122,9 +104,6 @@ public class RegistInfoActivity extends BaseActivity {
             public void onClick(View v) {
                 String value = editText.getText().toString().trim();//姓名
                 String value1 = editText2.getText().toString().trim();//账号
-                type = editText4.getText().toString().trim();//用户类型
-                if (TextUtils.isEmpty(type))
-                    type = "0";
                 String value4 = editText5.getText().toString().trim();
                 if (TextUtils.isEmpty(value)) {
                     Toast.makeText(RegistInfoActivity.this, "姓名不能为空", Toast.LENGTH_SHORT).show();
@@ -137,7 +116,7 @@ public class RegistInfoActivity extends BaseActivity {
                 } else if (TextUtils.isEmpty(value4)) {
                     Toast.makeText(RegistInfoActivity.this, "请输入您的详细地址", Toast.LENGTH_SHORT).show();
                 }*/ else {
-                    goRegist(value, value1);
+                    goRegist(value, value1, value4);
                 }
             }
         });
@@ -160,22 +139,24 @@ public class RegistInfoActivity extends BaseActivity {
         });
     }
 
-    private void goRegist(String name, String account) {
+    private void goRegist(String name, String account, String address) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
         list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("password", passWord));
         list.add(new BasicNameValuePair("name", name));
-        list.add(new BasicNameValuePair("sex", sex));
-        list.add(new BasicNameValuePair("type", type)); //类型(0:用户注册，1：修补工2：团队)
-        list.add(new BasicNameValuePair("address", "北京市海淀区西北旺东路10号院百度科技园1号楼"));
+        if (type == 1) {
+            list.add(new BasicNameValuePair("sex", sex));
+        }
+        list.add(new BasicNameValuePair("type", String.valueOf(type))); //类型(0:用户注册，1：修补工2：团队)
+        list.add(new BasicNameValuePair("address", address));
         list.add(new BasicNameValuePair("mobile", phoneNumber));
-        list.add(new BasicNameValuePair("cert_type", "身份证"));
-        list.add(new BasicNameValuePair("cert_no", "230119198209012988"));
-        list.add(new BasicNameValuePair("technical", "手机贴膜"));
-        list.add(new BasicNameValuePair("expertise", "手机专业贴膜十年"));
-        list.add(new BasicNameValuePair("prictise", "3年以上"));
-        list.add(new BasicNameValuePair("pay_type", "支付宝"));
-        list.add(new BasicNameValuePair("pay_no", phoneNumber));
+        list.add(new BasicNameValuePair("cert_type", editText7.getText().toString().trim()));
+        list.add(new BasicNameValuePair("cert_no", editText8.getText().toString().trim()));
+        list.add(new BasicNameValuePair("technical", editText9.getText().toString().trim()));
+        list.add(new BasicNameValuePair("expertise", editText10.getText().toString().trim()));
+        list.add(new BasicNameValuePair("prictise", editText11.getText().toString().trim()));
+        list.add(new BasicNameValuePair("pay_type", editText12.getText().toString().trim()));
+        list.add(new BasicNameValuePair("pay_no", editText13.getText().toString().trim()));
         list.add(new BasicNameValuePair("workman", "工人列表数组"));
         list.add(new BasicNameValuePair("telephone", "工人电话号码"));
         try {
@@ -199,7 +180,6 @@ public class RegistInfoActivity extends BaseActivity {
                             LogUtils.E(paramObject);
                             e.printStackTrace();
                         }
-//                        dealResult(paramObject);
                     }
                 }
 
@@ -213,37 +193,4 @@ public class RegistInfoActivity extends BaseActivity {
         }
     }
 
-    ArrayList<String> provicesItems = new ArrayList<String>();
-    ArrayList<ArrayList<String>> cityItems = new ArrayList<ArrayList<String>>();
-    ArrayList<ArrayList<ArrayList<String>>> districtItems = new ArrayList<ArrayList<ArrayList<String>>>();
-//    }
-
-    PopupWindow.OnDismissListener mOnDismissListener = new PopupWindow.OnDismissListener() {
-        @Override
-        public void onDismiss() {
-        }
-    };
-
-    /**
-     * 注册成功后将返回下来的数据存储到sp中
-     *
-     * @param paramObject 数据
-     */
-    private void dealResult(String paramObject) {
-        String s = DataUtils.dealResult(paramObject);
-        if (!TextUtils.isEmpty(s)) {
-            UserInfoBean userInfo = GsonUtils.fromJson(s, UserInfoBean.class);
-            if (userInfo != null) {
-                SPUtils.getInstance(this).setUserId(userInfo.getUserId());
-                SPUtils.getInstance(this).setUserPhone(userInfo.getPhoneNum());
-                SPUtils.getInstance(this).setUserName(userInfo.getName());
-                SPUtils.getInstance(this).setShopName(userInfo.getShopName());
-                SPUtils.getInstance(this).setCity(userInfo.getCity());
-                SPUtils.getInstance(this).setStreet(userInfo.getStreet());
-                SPUtils.getInstance(this).setAddress(userInfo.getAddress());
-                startActivity(new Intent(RegistInfoActivity.this, MainActivity.class));
-                RegistInfoActivity.this.finish();
-            }
-        }
-    }
 }
