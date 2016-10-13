@@ -43,13 +43,13 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="center_horizontal"
                     android:layout_weight="1"
-                    android:textSize="12sp"
-                    android:background="@color/transparent" />
+                    android:background="@color/transparent"
+                    android:textSize="12sp" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="(必填)" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="(必填)" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -81,9 +81,9 @@
                     android:textSize="12sp" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:hint="(必填)" />-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:hint="(必填)" />-->
             </LinearLayout>
 
             <LinearLayout
@@ -157,10 +157,10 @@
                     android:id="@+id/editText5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@color/transparent"
                     android:hint=" 请输入详细地址"
-                    android:textSize="12sp"
                     android:singleLine="true"
-                    android:background="@color/transparent" />
+                    android:textSize="12sp" />
             </LinearLayout>
 
             <LinearLayout
@@ -186,8 +186,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
-                    android:hint="与发送验证码手机号保持一致"
                     android:editable="false"
+                    android:hint="与发送验证码手机号保持一致"
                     android:textSize="12sp" />
             </LinearLayout>
 
@@ -337,11 +337,28 @@
                     android:layout_marginRight="10dp"
                     android:text="支付方式" />
 
-                <EditText
-                    android:id="@+id/editText12"
+                <RadioGroup
+                    android:id="@+id/rg_pay"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/transparent" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rb_pay_wx"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="微信" />
+
+                    <RadioButton
+                        android:id="@+id/rb_pay_alipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:text="支付宝" />
+
+                </RadioGroup>
             </LinearLayout>
 
             <LinearLayout

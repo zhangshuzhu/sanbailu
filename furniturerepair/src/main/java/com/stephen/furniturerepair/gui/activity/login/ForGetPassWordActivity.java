@@ -41,7 +41,6 @@ import butterknife.ButterKnife;
  * 重置密码-忘记密码
  */
 public class ForgetPasswordActivity extends BaseActivity implements TitleBarListener.ListenerTitleBarLeft, TextWatcher, View.OnClickListener {
-    public static final String TAG = "ForGetPassWordActivity";
     @Bind(R.id.editText)
     EditText editText;
     @Bind(R.id.editText2)
@@ -80,8 +79,6 @@ public class ForgetPasswordActivity extends BaseActivity implements TitleBarList
     private void sendRequest(String phoneNumber) {
         List<BasicNameValuePair> list = new ArrayList<BasicNameValuePair>();
         list.add(new BasicNameValuePair("mobile", phoneNumber));
-//        list.add(new BasicNameValuePair("purpose", String.valueOf(2)));
-//        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
         try {
             getDataFromServer(list, URL.URL_SEND_MOBILE_SMS, new GlobalCallBack() {
                 @Override
@@ -212,8 +209,6 @@ public class ForgetPasswordActivity extends BaseActivity implements TitleBarList
         list.add(new BasicNameValuePair("mobile", phoneNumber));
         list.add(new BasicNameValuePair("captcha", verifyCode));
         list.add(new BasicNameValuePair("password", password));
-//        list.add(new BasicNameValuePair("from", GlobalVariable.FROM));
-//        list.add(new BasicNameValuePair("userId", SPUtils.getInstance(ForGetPassWordActivity.this).getUserId()));
         try {
             getDataFromServer(list, URL.URL_FORGET_PASSWORD, new GlobalCallBack() {
                 @Override
