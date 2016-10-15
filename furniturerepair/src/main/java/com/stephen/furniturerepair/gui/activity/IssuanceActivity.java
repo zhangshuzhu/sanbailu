@@ -303,7 +303,8 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
 //        list.add(new BasicNameValuePair("account", account));
         list.add(new BasicNameValuePair("title", title));
         list.add(new BasicNameValuePair("repair_type", tvSuanceType.getText().toString()));
-        list.add(new BasicNameValuePair("recent_phone",neerImage ));//二进制流  base64字符串
+        if (!TextUtils.isEmpty(neerImage))
+            list.add(new BasicNameValuePair("recent_photo", neerImage));//二进制流  base64字符串
 //        list.add(new BasicNameValuePair("far_phone", ));
 //        list.add(new BasicNameValuePair("recent_name", ));//上传近照文件名称（在相册里读出的文件名）
 //        list.add(new BasicNameValuePair("far_name", ));//上传远照名称
@@ -346,7 +347,7 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
 
                 @Override
                 public void responseError(String string) {
-
+                    LogUtils.E("=======responseError======" + string);
                 }
             });
         } catch (Exception e) {
@@ -407,7 +408,7 @@ public class IssuanceActivity extends BaseActivity implements TitleBarListener.L
         }
     }
 
-    ImageLoadingListener imageLoadingListener=new ImageLoadingListener(){
+    ImageLoadingListener imageLoadingListener = new ImageLoadingListener() {
 
         @Override
         public void onLoadingStarted(String s, View view) {
