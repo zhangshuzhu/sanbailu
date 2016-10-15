@@ -5,38 +5,38 @@ android {
 //        debug {
 //            keyAlias 'androiddebugkey'
 //            keyPassword 'android'
-//            storeFile file('C:\\Users\\Stephen\\.android\\debug.keystore')
+//            storeFile file('C:/Users/123/.android/debug.keystore')
 //            storePassword 'android'
 //        }
         release {
             keyAlias '家具修补'
             keyPassword '123456'
-            storeFile file('D:/repairfurniture.jks')
+            storeFile file('F:/Android/repairfurniture.jks')
             storePassword '123456'
         }
     }
     compileSdkVersion 22
     buildToolsVersion "23.0.2"
+
     defaultConfig {
         applicationId "com.stephen.furniturerepair"
         minSdkVersion 14
         targetSdkVersion 22
         versionCode 1
         versionName "1.0"
-        signingConfig signingConfigs.release
     }
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
+
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs']
         }
-    }
-    productFlavors {
     }
 }
 

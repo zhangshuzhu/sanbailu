@@ -75,4 +75,10 @@
         <item name="android:textColor">@color/app_theme_red</item>
         <item name="android:textSize">12sp</item>
     </style>
+    <!--分割线-->
+    <style name="line">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">0.5dp</item>
+        <item name="android:background">#666666</item>
+    </style>
 </resources>

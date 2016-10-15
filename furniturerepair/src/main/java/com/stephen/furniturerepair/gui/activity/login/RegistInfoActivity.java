@@ -57,6 +57,8 @@ public class RegistInfoActivity extends BaseActivity {
     EditText editText10;
     @Bind(R.id.editText11)
     EditText editText11;
+    @Bind(R.id.editText12)
+    EditText editText12;
     @Bind(R.id.editText13)
     EditText editText13;
     @Bind(R.id.rg_sex)
@@ -67,17 +69,10 @@ public class RegistInfoActivity extends BaseActivity {
     RadioButton rbFemale;
     @Bind(R.id.ll_register_sex)
     LinearLayout llRegisterSex;
-    @Bind(R.id.rb_pay_wx)
-    RadioButton rbPayWx;
-    @Bind(R.id.rb_pay_alipay)
-    RadioButton rbPayAlipay;
-    @Bind(R.id.rg_pay)
-    RadioGroup rgPay;
     private String phoneNumber;
     private String passWord;
     private String sex = "男";
     private int type;
-    private String pay_type="微信";
 
     @Override
     protected int setView() {
@@ -95,7 +90,7 @@ public class RegistInfoActivity extends BaseActivity {
         type = intent.getIntExtra("type", 0);
         if (type == 1) {
             llRegisterSex.setVisibility(View.VISIBLE);
-        } else {
+        }else {
             llRegisterSex.setVisibility(View.GONE);
         }
         editText6.setText(phoneNumber);
@@ -142,23 +137,6 @@ public class RegistInfoActivity extends BaseActivity {
                 }
             }
         });
-//        支付方式
-        rgPay.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                switch (i) {
-//            支付宝
-                    case R.id.rb_pay_alipay:
-                        pay_type = "支付宝";
-                        break;
-//            微信
-                    case R.id.rb_male:
-                        pay_type = "微信";
-                        break;
-
-                }
-            }
-        });
     }
 
     private void goRegist(String name, String account, String address) {
@@ -177,7 +155,7 @@ public class RegistInfoActivity extends BaseActivity {
         list.add(new BasicNameValuePair("technical", editText9.getText().toString().trim()));
         list.add(new BasicNameValuePair("expertise", editText10.getText().toString().trim()));
         list.add(new BasicNameValuePair("prictise", editText11.getText().toString().trim()));
-        list.add(new BasicNameValuePair("pay_type", pay_type));
+        list.add(new BasicNameValuePair("pay_type", editText12.getText().toString().trim()));
         list.add(new BasicNameValuePair("pay_no", editText13.getText().toString().trim()));
         list.add(new BasicNameValuePair("workman", "工人列表数组"));
         list.add(new BasicNameValuePair("telephone", "工人电话号码"));
